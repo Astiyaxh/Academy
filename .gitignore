@@ -137,3 +137,7 @@ db.sqlite3
 *.pot
 */migrations/*
 */media/*
+media
+
+#vscode#
+.vscode
