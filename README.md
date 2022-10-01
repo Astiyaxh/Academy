@@ -1,2 +1,0 @@
-# Academy
-website for academy.
