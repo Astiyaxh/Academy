@@ -120,7 +120,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 LANGUAGE_CODE = 'fa-ir'
 
-TIME_ZONE = 'asia/tehran'
+TIME_ZONE = 'UTC'
 
 USE_I18N = True
 
