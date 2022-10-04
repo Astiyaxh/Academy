@@ -16,7 +16,7 @@ def profile(request, *args, **kwargs):
                 return HttpResponseRedirect(reverse('successfullsave'))
 
 
-    return render(request, 'user/profile.html')
+    return render(request, '_layout.html')
 
 @login_required
 def successfullsave(request):

@@ -58,7 +58,7 @@ ROOT_URLCONF = 'academy.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -105,12 +105,6 @@ AUTH_PASSWORD_VALIDATORS = [
 
 
 STATIC_URL = '/static/'
-if DEBUG:
-    STATIC_ROOT = os.path.join(BASE_DIR, 'static-files')
-else:
-    STATICFILES_DIRS = [
-        os.path.join(BASE_DIR, 'static')
-]
 LOGIN_URL = "/login"
 
 MEDIA_URL = 'media/'
@@ -130,8 +124,6 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
-
-STATIC_URL = 'static/'
 
 AUTH_USER_MODEL = 'user.User'
 
