@@ -1,0 +1,337 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+  {% block titlemain %}<title>{{ Title }}</title>{% endblock %}
+  {% include '_header.html' %}
+  <!-- Bootstrap -->
+  <link href="{% static 'assets/Content/bootstrap-rtl.min.css' %}" rel="stylesheet" />
+  <!-- Font Awesome -->
+  <link href="{% static 'assets/vendors/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet" />
+  <!-- NProgress -->
+  <link href="{% static 'assets/vendors/nprogress/nprogress.css' %}" rel="stylesheet" />
+  <!-- Css Block -->
+  {% block cssBlock %}{% endblock %}
+  <!-- jQuery custom content scroller -->
+  <link href="{% static 'assets/vendors/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.min.css' %}"
+    rel="stylesheet" />
+  <!-- Custom Theme Style -->
+  <link href="{% static 'assets/Content/custom.min.css' %}" rel="stylesheet" />
+  <link rel="stylesheet"
+    href="{% static '/SubmitForm/Content/MdBootstrapPersianDateTimePicker/jquery.Bootstrap-PersianDateTimePicker.min.css' %}" />
+  <style>
+    .clsright {
+      text-align: right;
+    }
+
+  </style>
+</head>
+{# oncontextmenu="return false" #}
+
+<body class="nav-md">
+  <!-- jQuery -->
+  <script src="{% static 'assets/vendors/jquery/dist/jquery.min.js' %}"></script>
+  <div class="container body">
+    <div class="main_container">
+      <div class="col-md-3 left_col menu_fixed hidden-print">
+        <div class="left_col scroll-view">
+          <div class="clearfix"></div>
+          <div class="profile">
+            <div class="profile_pic">
+              <img src="{% static 'assets/images/img.jpg' %}" alt="سیاوش ثنائی" class="img-circle profile_img" />
+            </div>
+            <div class="profile_info">
+              <span></span>
+              <h2>{{request.user.first_name}} {{request.user.last_name}}</h2>
+            </div>
+          </div>
+          <br />
+          <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+            <div class="menu_section">
+              <h3>مدیر</h3>
+              <ul class="nav side-menu">
+                <li>
+                  <a href="#"><i class="fa fa-home"></i>خانه</a>
+                </li>
+
+                <li>
+                  <a><i class="fa fa-pencil"></i> کاربر آموزشگاه
+                    <span class="fa fa-chevron-down"></span></a>
+                  <ul class="nav child_menu">
+                    <li><a href="/form/">اطلاعات پایه</a></li>
+                  </ul>
+                </li>
+                <li>
+                  <a><i class="fa fa-university"></i> مرکز آموزش علمی آزاد
+                    <span class="fa fa-chevron-down"></span></a>
+                  <ul class="nav child_menu">
+                    <li>
+                      <a href="#">لیست ثبت شده ها</a>
+                    </li>
+                  </ul>
+                </li>
+                <li>
+                  <a><i class="fa fa-language"></i> مرکز آموزش زبان خارجی
+                    <span class="fa fa-chevron-down"></span></a>
+                  <ul class="nav child_menu">
+                    <li>
+                      <a href="#">
+                        گزارش ثبت شده ها</a>
+                    </li>
+                  </ul>
+                </li>
+                <li>
+                  <a><i class="fa fa-bar-chart"></i> گزارش گیری
+                    <span class="fa fa-chevron-down"></span></a>
+                  <ul class="nav child_menu">
+                    <li>
+                      <a href="#">
+                        گزارش ثبت شده ها</a>
+                    </li>
+                  </ul>
+                </li>
+                <li>
+                  <a><i class="fa fa-shield"></i> ناظر
+                    <span class="fa fa-chevron-down"></span></a>
+                  <ul class="nav child_menu">
+                    <li>
+                      <a href="#">
+                        گزارش ثبت شده ها</a>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="sidebar-footer hidden-small">
+            <a data-toggle="tooltip" data-placement="top" href="#" title="صفحه اصلی سایت">
+              <span class="glyphicon glyphicon-tag" aria-hidden="true"></span>
+            </a>
+            <a data-toggle="tooltip" data-placement="top" title="تمام صفحه" onclick="toggleFullScreen();">
+              <span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span>
+            </a>
+            <a data-toggle="tooltip" data-placement="top" title="قفل" class="lock_btn">
+              <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
+            </a>
+            <a data-toggle="tooltip" data-placement="top" href="#" title="خروج">
+              <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
+            </a>
+          </div>
+        </div>
+      </div>
+      <!-- top navigation -->
+      <div class="top_nav hidden-print">
+        <div class="nav_menu">
+          <nav>
+            <div class="nav toggle">
+              <a id="menu_toggle"><i class="fa fa-bars"></i></a>
+            </div>
+            <ul class="nav navbar-nav navbar-right">
+              <li class="clsright">
+                <a href="#" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                  <img src="{% static 'assets/images/img.jpg' %}" alt="..." />
+                  {{request.user.first_name}} {{request.user.last_name}}
+                  <span class="fa fa-angle-down"></span>
+                </a>
+                <ul class="dropdown-menu dropdown-usermenu pull-right">
+                  <li class="clsright">
+                    <a href="{% url 'user:profile' %}"><i class="fa fa-user pull-left"></i>پروفایل</a>
+                  </li>
+                  <li class="clsright">
+                    <a href="#"><i class="fa fa-key pull-left"></i>تغییر رمز عبور</a>
+                  </li>
+                  <li class="clsright">
+                    <a href="#"><i class="fa fa-question pull-left"></i>راهنما</a>
+                  </li>
+                  <li class="clsright">
+                    <a href="#"><i class="fa fa-sign-out pull-left"></i>خروج</a>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+      <!-- /top navigation -->
+      <!-- page content -->
+      <div class="right_col" role="main">
+        <div class="">
+          <div class="page-title">
+            <div class="title_left">
+              <h3>خانه</h3>
+            </div>
+            <div class="title_right">
+              <div class="col-md-5 col-sm-5 form-group row pull-right top_search">
+                <form method="get" action="">
+                  <div class="input-group">
+                    <input type="text" name="user_name" id="id_user_name" class="form-control"
+                      placeholder="جستجو ..." />
+                    <span class="input-group-btn">
+                      <button class="btn btn-default" type="submit" style="border-radius: 0 !important">
+                        <i class="fa fa-search"></i>
+                      </button>
+                      <button class="btn btn-default" type="button" data-toggle="modal" data-target="#exampleModal1">
+                        <i class="fa fa-filter"></i>
+                      </button>
+                    </span>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+          {% block pageContent %}{% endblock %}
+        </div>
+      </div>
+      <!-- /page content -->
+      <!-- footer content -->
+      <footer class="hidden-print">
+        <div class="pull-right">
+          <a>تحلیل و پیاده سازی توسط اریکه پیشگامان اروند</a>
+        </div>
+        <div class="clearfix"></div>
+      </footer>
+    </div>
+  </div>
+  <div id="lock_screen">
+    <table>
+      <tr>
+        <td>
+          <div class="clock"></div>
+          <span class="unlock">
+            <span class="fa-stack fa-5x">
+              <i class="fa fa-square-o fa-stack-2x fa-inverse"></i>
+              <i id="icon_lock" class="fa fa-lock fa-stack-1x fa-inverse"></i>
+            </span>
+          </span>
+        </td>
+      </tr>
+    </table>
+  </div>
+  {% block searchmodal %}
+  {#modal#}
+  <div class="modal fade" id="exampleModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">جستجو فیلتر دار</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form method="get" action="">
+            <div class="form-group" id="TextInput">
+              <label for="recipient-name" class="col-form-label">جستجو</label>
+              <input type="text" class="form-control" name="user_name2" id="recipient-name" />
+            </div>
+            <div class="row hidden" id="DateInput">
+              <div class="form-group">
+                <label for="recipient-name" class="form-group">از تاریخ</label>
+                <input type="text" class="form-control" name="from_date" id="from-Date" data-mddatetimepicker="true"
+                  data-placement="right" data-englishnumber="true"
+                  pattern='([1][234]\d{2}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))'
+                  oninvalid="this.setCustomValidity('تاریخ معتبر وارد کنید')"
+                  onchange="this.setCustomValidity('')"
+                />
+              </div>
+              <div class="form-group">
+                <label for="recipient-name" class="form-group">تا تاریخ</label>
+                <input type="text" class="form-control" name="to_date" id="to_Date" data-mddatetimepicker="true"
+                  data-placement="right" data-englishnumber="true"
+                  pattern='([1][234]\d{2}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))'
+                  oninvalid="this.setCustomValidity('تاریخ معتبر وارد کنید')"
+                  onchange="this.setCustomValidity('')"
+                />
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="message-text" class="col-form-label">جستجو بر اساس</label>
+              <select onchange="ChoiceChange()" class="form-control" name="choice" id="id_choice">
+                <option value="Name">نام کاربری</option>
+                <option value="IntField">عدد صحیح</option>
+                <option value="FloatField">عدد اعشاری</option>
+                <option value="CharField">کاراکتر1</option>
+                <option value="VcharField">کاراکتر2</option>
+                <option value="DateField">تاریخ</option>
+              </select>
+            </div>
+            <button type="submit" class="btn btn-primary">جستجو</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">
+              کنسل
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {#modal#}
+  {% endblock %}
+  <!-- Bootstrap -->
+  <script src="{% static 'assets/Scripts/bootstrap-rtl.min.js' %}"></script>
+  <!-- FastClick -->
+  <script src="{% static 'assets/vendors/fastclick/lib/fastclick.js' %}"></script>
+  <!-- NProgress -->
+  <script src="{% static 'assets/vendors/nprogress/nprogress.js' %}"></script>
+  {% block jsBlock %}{% endblock %}
+  <!-- jQuery custom content scroller -->
+  <script
+    src="{% static 'assets/vendors/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js' %}"></script>
+  <!-- Custom Theme Scripts -->
+  <script src="{% static 'assets/Scripts/custom.min.js' %}"></script>
+
+  <script>
+    function ChoiceChange() {
+      if ($("#id_choice").val() == "DateField") {
+        $("#DateInput").removeClass("hidden");
+        $("#TextInput").addClass("hidden");
+        $("#recipient-name").val("");
+      } else {
+        $("#TextInput").removeClass("hidden");
+        $("#DateInput").addClass("hidden");
+        $("#from-Date").val("");
+        $("#to_Date").val("");
+      }
+    }
+  </script>
+
+  <script src="{% static '/SubmitForm/Scripts/MdBootstrapPersianDateTimePicker/calendar.js' %}"
+    type="text/javascript"></script>
+  <script
+    src="{% static '/SubmitForm/Scripts/MdBootstrapPersianDateTimePicker/jquery.Bootstrap-PersianDateTimePicker.js' %}"
+    type="text/javascript"></script>
+  <script type="text/javascript">
+    $("#input1").change(function () {
+      var $this = $(this),
+        value = $this.val();
+      alert(value);
+    });
+    $("#textbox1").change(function () {
+      var $this = $(this),
+        value = $this.val();
+      alert(value);
+    });
+
+      // {#document.onkeydown = function (e) {#}
+      // {#  if (event.keyCode == 123) {#}
+      // {#    return false;#}
+      // {#  }#}
+      // {#  if (e.ctrlKey && e.shiftKey && e.keyCode == "I".charCodeAt(0)) {#}
+      // {#    return false;#}
+      // {#  }#}
+      // {#  if (e.ctrlKey && e.shiftKey && e.keyCode == "C".charCodeAt(0)) {#}
+      // {#    return false;#}
+      // {#  }#}
+      // {##}
+      // {#  if (e.ctrlKey && e.shiftKey && e.keyCode == "J".charCodeAt(0)) {#}
+      // {#    return false;#}
+      // {#  }#}
+      // {#  if (e.ctrlKey && e.keyCode == "U".charCodeAt(0)) {#}
+      // {#    return false;#}
+      // {#  }#}
+  </script>
+</body>
+
+</html>
