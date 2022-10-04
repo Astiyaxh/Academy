@@ -139,6 +139,7 @@ db.sqlite3
 */media/*
 media
 static/
+.static/
 
 #vscode#
 .vscode
