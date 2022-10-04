@@ -138,6 +138,7 @@ db.sqlite3
 */migrations/*
 */media/*
 media
+static/
 
 #vscode#
 .vscode
