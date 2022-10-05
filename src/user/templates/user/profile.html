@@ -1,1 +1,789 @@
-<h1>Hello</h1>
+{% extends '_layout.html' %}
+{% load static %}
+
+{% block jsBlock %}
+    <!-- Datatables -->
+    <script src="{% static 'assets/vendors/datatables.net/js/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static 'assets/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js' %}"></script>
+    <script src="{% static 'assets/vendors/datatables.net-buttons/js/dataTables.buttons.min.js' %}"></script>
+    <script src="{% static 'assets/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js' %}"></script>
+    <script src="{% static 'assets/vendors/datatables.net-buttons/js/buttons.flash.min.js' %}"></script>
+    <script src="{% static 'assets/vendors/datatables.net-buttons/js/buttons.html5.min.js' %}"></script>
+    <script src="{% static 'assets/vendors/datatables.net-buttons/js/buttons.print.min.js' %}"></script>
+    <script src="{% static 'assets/vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js' %}"></script>
+    <script src="{% static 'assets/vendors/datatables.net-keytable/js/dataTables.keyTable.min.js' %}"></script>
+    <script src="{% static 'assets/vendors/datatables.net-responsive/js/dataTables.responsive.min.js' %}"></script>
+    <script src="{% static 'assets/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js' %}"></script>
+    <script src="{% static 'assets/vendors/datatables.net-scroller/js/dataTables.scroller.min.js' %}"></script>
+    <script src="{% static 'assets/vendors/jszip/dist/jszip.min.js' %}"></script>
+    <script src="{% static 'assets/vendors/pdfmake/build/pdfmake.min.js' %}"></script>
+    <script src="{% static 'assets/vendors/pdfmake/build/vfs_fonts.js' %}"></script>
+    <script src="{% static 'assets/vendors/select2/dist/js/select2.min.js' %}"></script>
+    <script>
+        $('input').addClass('form-control');
+    </script>
+    <script>
+        $.fn.extend({
+            treed: function (o) {
+
+                var openedClass = 'glyphicon-minus-sign';
+                var closedClass = 'glyphicon-plus-sign';
+
+                if (typeof o != 'undefined') {
+                    if (typeof o.openedClass != 'undefined') {
+                        openedClass = o.openedClass;
+                    }
+                    if (typeof o.closedClass != 'undefined') {
+                        closedClass = o.closedClass;
+                    }
+                }
+                ;
+
+                //initialize each of the top levels
+                var tree = $(this);
+                tree.addClass("tree");
+                tree.find('li').has("ul").each(function () {
+                    var branch = $(this); //li with children ul
+                    branch.prepend("<i class='indicator glyphicon " + closedClass + "'></i>");
+                    branch.addClass('branch');
+                    branch.on('click', function (e) {
+                        if (this == e.target) {
+                            var icon = $(this).children('i:first');
+                            icon.toggleClass(openedClass + " " + closedClass);
+                            $(this).children().children().toggle();
+                        }
+                    })
+                    branch.children().children().toggle();
+                });
+                //fire event from the dynamically added icon
+                tree.find('.branch .indicator').each(function () {
+                    $(this).on('click', function () {
+                        $(this).closest('li').click();
+                    });
+                });
+                //fire event to open branch if the li contains an anchor instead of text
+                tree.find('.branch>a').each(function () {
+                    $(this).on('click', function (e) {
+                        $(this).closest('li').click();
+                        e.preventDefault();
+                    });
+                });
+                //fire event to open branch if the li contains a button instead of text
+                tree.find('.branch>button').each(function () {
+                    $(this).on('click', function (e) {
+                        $(this).closest('li').click();
+                        e.preventDefault();
+                    });
+                });
+            }
+        });
+
+        //Initialization of treeviews
+
+        $('#tree1').treed();
+
+        function setChartId(id, name, type) {
+            console.log(type)
+            switch (type) {
+                case '1':
+                   console.log(1)
+                    break;
+                case '2':
+                    console.log(2)
+                    break;
+                case '3':
+                    addTeam(id,name)
+                    break;
+            }
+
+        }
+    </script>
+
+    <script>
+        $("#id_birthday_age").addClass('hidden');
+    </script>
+
+    <script>
+        function normalizeDate(dateInt) {
+        return dateInt.substring(0, 4) + '/' + dateInt.substring(4, 6) + '/' + dateInt.substring(6, 8);
+        ;}
+        document.getElementById("fromDate1").value=normalizeDate(document.getElementById("id_birthday_age").value)
+        
+    </script>
+
+    <!-- <script>
+        function datepicker1Change() {
+            document.getElementById("id_birthday_age").value = fixNumbers($('#fromDate1').val().replace("/", "").replace("/", ""));
+        }
+    </script> -->
+<script>
+$('#id_last_name').keypress(function (e) {
+        var regex = new RegExp(/^[\u0600-\u06FF\s]+$/);
+        var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
+        if (regex.test(str)) {
+            return true;
+        }
+        else {
+            e.preventDefault();
+            return false;
+        }
+    });
+    $('#id_first_name').keypress(function (e) {
+        var regex = new RegExp(/^[\u0600-\u06FF\s]+$/);
+        var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
+        if (regex.test(str)) {
+            return true;
+        }
+        else {
+            e.preventDefault();
+            return false;
+        }
+    });
+    $('#id_mobileNumber').on('input', function (event) { 
+    this.value = this.value.replace(/[^0-9]/g, '');
+    });
+    </script>
+{% if successfullsave %}
+<!-- <script>
+    //  document.onload = function(){alert("داده ها با موفقیت ذخیره شدند")}
+    //  $(window).on('load', function() {
+    //     alert("داده ها با موفقیت ذخیره شدند")
+    // });
+</script> -->
+<script>
+$('#myModal').modal('show');
+</script>
+{% endif %}
+
+<script>
+    $("#id_birthdate").hide();
+</script>
+{% endblock %}
+
+{% block cssBlock %}
+    <!-- Datatables -->
+
+    <link href="{% static 'assets/vendors/select2/dist/css/select2.min.css' %}" rel="stylesheet" />
+    <link href="{% static 'assets/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css' %}"
+          rel="stylesheet">
+    <link href="{% static 'assets/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css' %}"
+          rel="stylesheet">
+    <link href="{% static 'assets/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css' %}"
+          rel="stylesheet">
+
+          <style>
+            .hide{
+              display:none;
+            }
+            </style>
+            <style>
+                .tree,
+                .tree ul {
+                    margin: 0;
+                    padding: 0;
+                    list-style: none
+                }
+        
+                .tree ul {
+                    margin-left: 1em;
+                    position: relative
+                }
+        
+                .tree ul ul {
+                    margin-left: .5em
+                }
+        
+                .tree ul:before {
+                    content: "";
+                    display: block;
+                    width: 0;
+                    position: absolute;
+                    top: 0;
+                    bottom: 0;
+                    left: 0;
+                    border-left: 1px solid
+                }
+        
+                .tree li {
+                    margin: 0;
+                    padding: 0 1em;
+                    line-height: 2em;
+                    color: #369;
+                    font-weight: 700;
+                    position: relative
+                }
+        
+                .tree ul li:before {
+                    content: "";
+                    display: block;
+                    width: 10px;
+                    height: 0;
+                    border-top: 1px solid;
+                    margin-top: -1px;
+                    position: absolute;
+                    top: 1em;
+                    left: 0
+                }
+        
+                .tree ul li:last-child:before {
+                    background: #fff;
+                    height: auto;
+                    top: 1em;
+                    bottom: 0
+                }
+        
+                .indicator {
+                    margin-right: 5px;
+                }
+        
+                .tree li a {
+                    text-decoration: none;
+                    color: #369;
+                }
+        
+                .tree li button,
+                .tree li button:active,
+                .tree li button:focus {
+                    text-decoration: none;
+                    color: #369;
+                    border: none;
+                    background: transparent;
+                    margin: 0px 0px 0px 0px;
+                    padding: 0px 0px 0px 0px;
+                    outline: 0;
+                }
+        
+                .limit_text{
+                    white-space: nowrap;
+                    overflow: hidden;
+                    width: 380px;
+                    height: 30px;
+                    text-overflow: ellipsis; 
+                }
+            </style>
+        
+{% endblock %}
+
+
+{% block pageContent %}
+<style>
+    input[type="file"] {
+  display: block;
+}
+.imageThumb {
+  max-height: 75px;
+  border: 2px solid;
+  padding: 1px;
+  cursor: pointer;
+}
+.pip {
+  display: inline-block;
+  margin: 10px 10px 0 0;
+}
+
+.remove {
+  display: block;
+  background: #444;
+  border: 1px solid black;
+  color: white;
+  text-align: center;
+  cursor: pointer;
+}
+.remove:hover {
+  background: white;
+  color: black;
+}
+.btn-file {
+    position: relative;
+    overflow: hidden;
+}
+.modal-dialog{
+    width: 1000px;
+}
+.btn-file input[type=file] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    font-size: 100px;
+    text-align: right;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    outline: none;
+    background: white;
+    cursor: inherit;
+    display: block;
+}
+.top_title {
+    top: -8px;
+}
+</style>
+<div class="">
+    <div class="x_panel">
+        <div class="x_title bg-primary">
+            <h2 class="pull-right">فرم ثبت</h2>
+            <ul class="nav navbar-left panel_toolbox">
+                <li>
+                    <a class="close-link"><i class="fa fa-close"></i></a>
+                </li>
+                <li>
+                    <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                </li>
+            </ul>
+            <div class="clearfix"></div>
+        </div>
+        
+            <div class="x_content">
+                <ul class="nav nav-tabs">
+                    <li class="active" ><a id="organPorposTab" data-toggle="tab" href="#organPorpos"> اطلاعات پایه</a></li>
+                    <li><a data-toggle="tab" id="organChartTab" href="#editorganchart">ویرایش اطلاعات حرفه ای</a></li>
+                  </ul>
+                  <form action="" method="post" enctype="multipart/form-data" style="background-color: white" novalidate>
+                    {% csrf_token %}
+                <div class="tab-content" >
+                    <div class="clearfix" style="padding: 15px;"></div>
+                  <div id="organPorpos" class="tab-pane fade in active">
+                    <div class="col-md-6 col-sm-12 col-xs-12 form-group pull-right">
+                        <label class="control-label col-md-12 col-sm-12 col-xs-12 pull-right">نام :</label>
+                        {{user.first_name}}
+                    </div>
+                    <div class="col-md-6 col-sm-12 col-xs-12 form-group pull-right">
+                        <label class="control-label col-md-12 col-sm-12 col-xs-12 pull-right">نام خانوادگی :</label>
+                    {{user.last_name}}
+                    </div>
+            
+                    <div class="col-md-6 col-sm-12 col-xs-12 form-group pull-right">
+                        <label class="control-label col-md-12 col-sm-12 col-xs-12 pull-right">نام کاربری :</label>
+                        {{user.username}}
+                    </div>
+                    <!-- <script>
+                        $(function () {
+            
+                            $('#datepicker0').datepicker();
+                            $('#datepicker1').datepicker();
+                            $('#datepicker2').datepicker();
+                        });
+                    </script> -->
+                    <div class="col-md-6 col-sm-12 col-xs-12 form-group pull-right">
+                        <label class="control-label col-md-5 col-sm-3 col-xs-12 pull-right">کد ملی :</label>
+                        {{user.national_code}}
+                    </div>
+                    <div class="col-md-6 col-sm-12 col-xs-12 form-group pull-right">
+                        <label class="control-label col-md-5 col-sm-3 col-xs-12 pull-right">شماره تلفن ۱ :</label>
+                        {{user.mobile_number1}}
+                    </div>
+                    <div class="col-md-6 col-sm-12 col-xs-12 form-group pull-right">
+                        <label class="control-label col-md-5 col-sm-3 col-xs-12 pull-right">شماره تلفن ۲ :</label>
+                        {{user.mobile_number2}}
+                    </div>
+                    <div class="col-md-6 col-sm-12 col-xs-12 form-group pull-right">
+                        <label class="control-label col-md-12 col-sm-12 col-xs-12 pull-right">تغییر عکس پروفایل :</label>
+                        {{user.profile_picture}}
+                    </div>
+                    <div class="col-md-6 col-sm-12 col-xs-12 form-group pull-right">
+                        <label class="control-label col-md-12 col-sm-12 col-xs-12 pull-right">ایمیل :</label>
+                        {{user.email}}
+                    </div>
+                    <div class="col-md-6 col-sm-12 col-xs-12 form-group pull-right">
+                        <label class="control-label col-md-12 col-sm-12 col-xs-12 pull-right">تاریخ تولد :</label>
+                        <input type="text" class="form-control" id="fromDate1"
+                            data-mddatetimepicker="true" data-trigger="click"
+                            data-targetselector="#fromDate1" data-groupid="group1" data-fromdate="true"
+                            data-enabletimepicker="false" data-placement="right"
+                            onchange="datepicker1Change()"
+                            >
+                        {{user.birthdate}}
+                    </div>
+                    <div class="col-md-6 col-sm-12 col-xs-12 form-group pull-right">
+                        <label class="control-label col-md-12 col-sm-12 col-xs-12 pull-right"> آدرس :</label>
+                        {{user.address}}
+                    </div>
+                    <div class="clearfix"></div>
+                  </div>
+                    <div id="editorganchart" class="tab-pane fade">
+                        <script>
+                            var tableIndex2 = 0;
+                            function add_pro_degree() {
+                                if(document.getElementById("degree_title").value.length == 0)
+                                    {
+                                        alert("عنوان نمیتواند خالی باشد")
+                                    }
+                                let val2 = $('#degree_title').val();
+                                console.log(val2)
+                                let text2 = $('#degree_title').val();
+                                var x2 = document.getElementById("tblFile").rows.namedItem(val2);
+                                console.log(x2);
+                                if (x2 == null && text2.trim() !='') {
+                                    var table2 = document.getElementById("tblFile");
+                                    var row2 = table2.insertRow(tableIndex2);
+                                    row2.id = val2;
+                                    var cell11 = row2.insertCell(0);
+                                    var cell22 = row2.insertCell(1);
+                                    var cell33 = row2.insertCell(2);
+                                    cell11.innerHTML = text2 + "<input name='degree_title' value='" + val2.trim() + "' class='hidden'>";
+                                    cell22.innerHTML="<input name='degree_files' required type='file' class=''>"
+                                    cell33.innerHTML = "<span class='glyphicon glyphicon-trash row-remover2 btn btn-danger '></span>";
+                                    tableIndex2++;
+                                }
+                                $('#degree_title').val('')
+                            }
+                            $("body").on('click', '.row-remover2', function() {
+                                $(this).closest('tr').remove();
+                                tableIndex2--;
+                            });
+                        </script>
+                        <!-- MODAL 1 -->
+                        <a type="button" style="border: solid black 1px;" class="btn btn-light" data-toggle="modal" data-target="#degree">
+                            <img src="static/assets/images/document-file-svgrepo-com.svg" style="width:50px;height:50px;" alt="">
+                            اطلاعات حرفه ای
+                        </a>
+  </div>
+
+
+                    <div class="col-md-3 col-sm-4 col-xs-4 form-group pull-right">
+                        <button type="submit" class="btn btn-success">ذخیره</button>
+                    </div>
+                    
+
+            </div>
+            </form>
+            {% for field in members_form %}
+            {% if field.errors %}
+                <div class="alert alert-danger">
+                    {{ field.label_tag }} {{ field.errors }}
+                </div>
+            {% endif %}
+        {% endfor %}
+        </div>
+  <!-- Modal -->
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+    Launch demo modal
+  </button>
+  
+  <!-- Modal -->
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          ...
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<script>
+    $.fn.fileUploader = function (filesToUpload) {
+this.closest(".files").change(function (evt) {
+
+  for (var i = 0; i < evt.target.files.length; i++) {
+      filesToUpload.push(evt.target.files[i]);
+  };
+  var output = [];
+
+  for (var i = 0, f; f = evt.target.files[i]; i++) {
+      var removeLink = "<a class=\"removeFile\" href=\"#\" data-fileid=\"" + i + "\"> حذف این فایل</a>";
+
+      output.push("<li><strong>", escape(f.name), "</strong> - ",
+          f.size, " bytes. &nbsp; &nbsp; ", removeLink, "</li> ");
+  }
+
+  $(this).children(".fileList")
+      .append(output.join(""));
+});
+};
+
+var filesToUpload = [];
+$(document).on("click",".removeFile", function(e){
+e.preventDefault();
+var fileName = $(this).parent().children("strong").text();
+for(i = 0; i < filesToUpload.length; ++ i){
+  if(filesToUpload[i].name == fileName){
+      filesToUpload.splice(i, 1);
+  }	
+}
+$(this).parent().remove();
+});
+$("#books_file").fileUploader(filesToUpload);
+$("#uploadBtn").click(function (e) {
+  e.preventDefault();
+});
+</script>
+<script>
+    $.fn.fileUploader = function (filesToUpload) {
+this.closest(".files").change(function (evt) {
+
+  for (var i = 0; i < evt.target.files.length; i++) {
+      filesToUpload.push(evt.target.files[i]);
+  };
+  var output = [];
+
+  for (var i = 0, f; f = evt.target.files[i]; i++) {
+      var removeLink = "<a class=\"removeFile\" href=\"#\" data-fileid=\"" + i + "\"> حذف این فایل</a>";
+
+      output.push("<li><strong>", escape(f.name), "</strong> - ",
+          f.size, " bytes. &nbsp; &nbsp; ", removeLink, "</li> ");
+  }
+
+  $(this).children(".fileList")
+      .append(output.join(""));
+});
+};
+
+var filesToUpload = [];
+$(document).on("click",".removeFile", function(e){
+e.preventDefault();
+var fileName = $(this).parent().children("strong").text();
+for(i = 0; i < filesToUpload.length; ++ i){
+  if(filesToUpload[i].name == fileName){
+      filesToUpload.splice(i, 1);
+  }	
+}
+$(this).parent().remove();
+});
+$("#inventions_file").fileUploader(filesToUpload);
+$("#uploadBtn").click(function (e) {
+  e.preventDefault();
+});
+</script>
+  <script>
+    $.fn.fileUploader = function (filesToUpload) {
+this.closest(".files").change(function (evt) {
+
+  for (var i = 0; i < evt.target.files.length; i++) {
+      filesToUpload.push(evt.target.files[i]);
+  };
+  var output = [];
+
+  for (var i = 0, f; f = evt.target.files[i]; i++) {
+      var removeLink = "<a class=\"removeFile\" href=\"#\" data-fileid=\"" + i + "\"> حذف این فایل</a>";
+
+      output.push("<li><strong>", escape(f.name), "</strong> - ",
+          f.size, " bytes. &nbsp; &nbsp; ", removeLink, "</li> ");
+  }
+
+  $(this).children(".fileList")
+      .append(output.join(""));
+});
+};
+
+var filesToUpload = [];
+$(document).on("click",".removeFile", function(e){
+e.preventDefault();
+var fileName = $(this).parent().children("strong").text();
+for(i = 0; i < filesToUpload.length; ++ i){
+  if(filesToUpload[i].name == fileName){
+      filesToUpload.splice(i, 1);
+  }	
+}
+$(this).parent().remove();
+});
+$("#articles_file").fileUploader(filesToUpload);
+$("#uploadBtn").click(function (e) {
+  e.preventDefault();
+});
+</script>
+
+  <script>
+    $.fn.fileUploader = function (filesToUpload) {
+this.closest(".files").change(function (evt) {
+
+  for (var i = 0; i < evt.target.files.length; i++) {
+      filesToUpload.push(evt.target.files[i]);
+  };
+  var output = [];
+
+  for (var i = 0, f; f = evt.target.files[i]; i++) {
+      var removeLink = "<a class=\"removeFile\" href=\"#\" data-fileid=\"" + i + "\"> حذف این فایل</a>";
+
+      output.push("<li><strong>", escape(f.name), "</strong> - ",
+          f.size, " bytes. &nbsp; &nbsp; ", removeLink, "</li> ");
+  }
+
+  $(this).children(".fileList")
+      .append(output.join(""));
+});
+};
+
+var filesToUpload = [];
+$(document).on("click",".removeFile", function(e){
+e.preventDefault();
+var fileName = $(this).parent().children("strong").text();
+for(i = 0; i < filesToUpload.length; ++ i){
+  if(filesToUpload[i].name == fileName){
+      filesToUpload.splice(i, 1);
+  }	
+}
+$(this).parent().remove();
+});
+$("#file_edu_records").fileUploader(filesToUpload);
+$("#uploadBtn").click(function (e) {
+  e.preventDefault();
+});
+</script>
+  <script>
+    $.fn.fileUploader = function (filesToUpload) {
+this.closest(".files").change(function (evt) {
+
+  for (var i = 0; i < evt.target.files.length; i++) {
+      filesToUpload.push(evt.target.files[i]);
+  };
+  var output = [];
+
+  for (var i = 0, f; f = evt.target.files[i]; i++) {
+      var removeLink = "<a class=\"removeFile\" href=\"#\" data-fileid=\"" + i + "\"> حذف این فایل</a>";
+
+      output.push("<li><strong>", escape(f.name), "</strong> - ",
+          f.size, " bytes. &nbsp; &nbsp; ", removeLink, "</li> ");
+  }
+
+  $(this).children(".fileList")
+      .append(output.join(""));
+});
+};
+
+var filesToUpload = [];
+$(document).on("click",".removeFile", function(e){
+e.preventDefault();
+var fileName = $(this).parent().children("strong").text();
+for(i = 0; i < filesToUpload.length; ++ i){
+  if(filesToUpload[i].name == fileName){
+      filesToUpload.splice(i, 1);
+  }	
+}
+$(this).parent().remove();
+});
+$("#skills_file").fileUploader(filesToUpload);
+$("#uploadBtn").click(function (e) {
+  e.preventDefault();
+});
+</script>
+      <script>
+          $.fn.fileUploader = function (filesToUpload) {
+    this.closest(".files").change(function (evt) {
+
+        for (var i = 0; i < evt.target.files.length; i++) {
+            filesToUpload.push(evt.target.files[i]);
+        };
+        var output = [];
+
+        for (var i = 0, f; f = evt.target.files[i]; i++) {
+            var removeLink = "<a class=\"removeFile\" href=\"#\" data-fileid=\"" + i + "\"> حذف این فایل</a>";
+
+            output.push("<li><strong>", escape(f.name), "</strong> - ",
+                f.size, " bytes. &nbsp; &nbsp; ", removeLink, "</li> ");
+        }
+
+        $(this).children(".fileList")
+            .append(output.join(""));
+    });
+};
+
+var filesToUpload = [];
+$(document).on("click",".removeFile", function(e){
+    e.preventDefault();
+    var fileName = $(this).parent().children("strong").text();
+    for(i = 0; i < filesToUpload.length; ++ i){
+        if(filesToUpload[i].name == fileName){
+            filesToUpload.splice(i, 1);
+        }	
+	}
+    $(this).parent().remove();
+});
+    $("#passed_trials_file").fileUploader(filesToUpload);
+    $("#uploadBtn").click(function (e) {
+        e.preventDefault();
+    });
+      </script>
+            <script>
+                $.fn.fileUploader = function (filesToUpload) {
+          this.closest(".files").change(function (evt) {
+      
+              for (var i = 0; i < evt.target.files.length; i++) {
+                  filesToUpload.push(evt.target.files[i]);
+              };
+              var output = [];
+      
+              for (var i = 0, f; f = evt.target.files[i]; i++) {
+                  var removeLink = "<a class=\"removeFile\" href=\"#\" data-fileid=\"" + i + "\"> حذف این فایل</a>";
+      
+                  output.push("<li><strong>", escape(f.name), "</strong> - ",
+                      f.size, " bytes. &nbsp; &nbsp; ", removeLink, "</li> ");
+              }
+      
+              $(this).children(".fileList")
+                  .append(output.join(""));
+          });
+      };
+      
+      var filesToUpload = [];
+      $(document).on("click",".removeFile", function(e){
+          e.preventDefault();
+          var fileName = $(this).parent().children("strong").text();
+          for(i = 0; i < filesToUpload.length; ++ i){
+              if(filesToUpload[i].name == fileName){
+                  filesToUpload.splice(i, 1);
+              }	
+          }
+          $(this).parent().remove();
+      });
+          $("#job_record_file").fileUploader(filesToUpload);
+          $("#uploadBtn").click(function (e) {
+              e.preventDefault();
+          });
+            </script>
+            <script>
+                $.fn.fileUploader = function (filesToUpload) {
+            this.closest(".files").change(function (evt) {
+            
+              for (var i = 0; i < evt.target.files.length; i++) {
+                  filesToUpload.push(evt.target.files[i]);
+              };
+              var output = [];
+            
+              for (var i = 0, f; f = evt.target.files[i]; i++) {
+                  var removeLink = "<a class=\"removeFile\" href=\"#\" data-fileid=\"" + i + "\"> حذف این فایل</a>";
+            
+                  output.push("<li><strong>", escape(f.name), "</strong> - ",
+                      f.size, " bytes. &nbsp; &nbsp; ", removeLink, "</li> ");
+              }
+            
+              $(this).children(".fileList")
+                  .append(output.join(""));
+            });
+            };
+            
+            var filesToUpload = [];
+            $(document).on("click",".removeFile", function(e){
+            e.preventDefault();
+            var fileName = $(this).parent().children("strong").text();
+            for(i = 0; i < filesToUpload.length; ++ i){
+              if(filesToUpload[i].name == fileName){
+                  filesToUpload.splice(i, 1);
+              }	
+            }
+            $(this).parent().remove();
+            });
+            $("#degree_file").fileUploader(filesToUpload);
+            $("#uploadBtn").click(function (e) {
+              e.preventDefault();
+            });
+            </script>
+    </div>
+</div>
+
+
+{% endblock %}

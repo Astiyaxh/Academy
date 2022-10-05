@@ -16,7 +16,7 @@ class User(AbstractUser):
     mobile_number1      = models.CharField(verbose_name='شماره همراه', max_length=11, null=True,blank = True, unique=True)
     mobile_number2      = models.CharField(verbose_name='شماره همراه', max_length=11, null=True,blank = True, unique=True)
     birthdate           = models.IntegerField(verbose_name='سال تولد', blank=True, null=True)
-    address             = models.TextField(verbose_name='ادرس', max_length=200, blank=True, default='ahvaz')
+    address             = models.CharField(verbose_name='آدرس', max_length=200, blank=True, default='اهواز')
     profile_picture     = models.ImageField(verbose_name='عکس پروفایل',validators=[validate_image],upload_to=get_file_path,null=True, blank=True)
 
     def __str__(self):
