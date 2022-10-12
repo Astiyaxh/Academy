@@ -83,7 +83,6 @@
                         <thead>
                         <tr>
                             <th>ردیف</th>
-                            <th>عنوان</th>
                             <th>ثبت کننده</th>
                             <th>نوع فرم</th>
                             <th>وضعیت</th>
@@ -93,23 +92,27 @@
                         <tbody>
                         {% for english_institutes_register in english_institutes_registers %}
                             <tr>
+                                <!--ردیف-->
                                 <td>{{ forloop.counter }}</td>
-                                <td> <p class="limit_text">{{ english_institutes_register.KnowledgeTitle }}</p> </td>
-                                <td>{% if english_institutes_register.user.first_name and english_institutes_register.user.last_name %}
+                                <!--ثبت کننده-->
+                                <td>
+                                {% if english_institutes_register.user.first_name and english_institutes_register.user.last_name %}
                                     {{ english_institutes_register.user.first_name }} {{ english_institutes_register.user.last_name }}
                                 {% else %}
                                     {{ english_institutes_register.user.username }}
-                                {% endif %}</td>
-                                <td id="{{ forloop.counter }}"></td>
+                                {% endif %}
+                                </td>
+                                <!--نوع فرم-->
                                 <td>                             
-                                    {% if english_institutes_register.Type == 1 %}
-                                        آموزشگاه
-                                    {% elif english_institutes_register.Type == 2 %}
-                                        زبان خارجی
-                                    {% elif english_institutes_register.Type == 3 %}
-                                        علمی آزاد
+                                    {% if english_institutes_register.type == 1 %}
+                                        <span>آموزشگاه</span>
+                                    {% elif english_institutes_register.type == 2 %}
+                                        <span>علمی آزاد</span>
+                                    {% elif english_institutes_register.type == 3 %}
+                                        <span>زبان خارجی</span>
                                     {% endif %}               
                                 </td>
+                                <!--وضعیت-->
                                 <td style="text-align: center;">                                    
                                     {% if english_institutes_register.send_status == 1 %}
                                     <span >ثبت شده</span>               
@@ -121,18 +124,16 @@
                                     <span >تایید شده</span>
                                     {% endif %}
                                 </td>
+                                <!--عملیات-->
                                 <td>
-
-                                    {% if english_institutes_register.user == user %}
+                                    <a class="btn btn-danger" href="{% url 'education:delete_english_institute_forms_list' id=english_institutes_register.id %}">حذف</a>
+                                    <!-- {% if english_institutes_register.user == user %}
                                             <a class="btn btn-primary" href="/EditExperience/{{ english_institutes_register.id }}"> ویرایش </a>
                                             <a class="btn btn-danger" data-toggle="modal" data-target="#exampleModal2"
-                                            onclick="document.getElementById('delete_link').href='/DeleteExperience/{{ english_institutes_register.id }}'">حذف </a>
+                                            onclick="document.getElementById('delete_link').href='/delete_forms_list/{{ english_institutes_register.id }}'">حذف</a>
                                     {% endif %}
-
-                                    <a class="btn btn-success" href="#">کاربرگ</a>
+                                    <a class="btn btn-success" href="#">کاربرگ</a> -->
                                 </td>
-
-                                
                             </tr>
                         {% endfor %}
                         </tbody>
@@ -140,7 +141,6 @@
                 </div>
             </div>
         </div>
-    </div>
 
     <div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog"
     aria-labelledby="exampleModalLabel"
