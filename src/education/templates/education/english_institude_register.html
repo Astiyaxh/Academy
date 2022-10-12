@@ -1,0 +1,176 @@
+{% extends '_layout.html' %}
+{% load static %}
+{% block jsBlock %}
+<script src="{% static 'assets/vendors/select2/dist/js/select2.min.js' %}"></script>
+
+<script>
+    </script>
+     <script>
+        $('input[type=file]').addClass('form-control');
+        $('input[type=number]').addClass('form-control');
+        $('input[type=text]').addClass('form-control');
+        $('input[type=email]').addClass('form-control');
+        $('select').addClass('form-control');
+        $(document).ready(function () { $('select').select2();});
+    </script>
+
+
+
+    {% endblock %}
+
+    {% block cssBlock %}
+    <link href="{% static 'assets/vendors/select2/dist/css/select2.min.css' %}" rel="stylesheet" />
+    <link href="{% static 'custom.css' %}" rel="stylesheet"/>
+    <style>
+        span.select2.select2-container.select2-container--default {
+            width: 100% !important;
+        }
+        p{
+            font-weight: bold;
+        }
+    </style>
+
+    {% endblock %}
+
+    {% block pageContent %}
+    <div class="">
+        <div class="tab-pane" role="tabpanel" id="complete">
+            <div class="x_panel">
+                <div class="x_title bg-primary">
+                    <ul class="nav navbar-left panel_toolbox">
+                        <li>
+                            <a class="close-link"><i class="fa fa-close"></i></a>
+                        </li>
+                        <li>
+                            <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                        </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+
+                <form action="" method="post" role="form" enctype="multipart/form-data" style="margin-top: -11px;">
+                    {% csrf_token %}
+                    <br>
+
+                <div class="clearfix"></div>
+
+                <div class="col-md-6 col-sm-12 col-xs-12 form-group pull-right">
+                    <p class="control-label col-md-4 col-sm-12 col-xs-12 pull-right"> نام و نام خانوادگی موسس  :</p>
+                    {{ form.name_founder }}
+                </div>
+                
+                <div class="col-md-6 col-sm-12 col-xs-12 form-group pull-right">
+                    <p class="control-label col-md-4 col-sm-12 col-xs-12 pull-right"> نام و نام خانوادگی مدیر  :</p>
+                    {{ form.name_manager }}
+                </div>
+
+                <div class="col-md-4 col-sm-12 col-xs-12 form-group pull-right">
+                    <p class="control-label col-md-4 col-sm-12 col-xs-12 pull-right"> شماره حساب مرکز:</p>
+                    {{ form.bin_number }}
+                </div>
+
+                <div class="col-md-4 col-sm-12 col-xs-12 form-group pull-right">
+                    <p class="control-label col-md-4 col-sm-12 col-xs-12 pull-right"> نزد بانک  :</p>
+                    {{ form.bank }}
+                </div>
+
+                <div class="col-md-4 col-sm-12 col-xs-12 form-group pull-right">
+                    <p class="control-label col-md-4 col-sm-12 col-xs-12 pull-right"> شعبه :</p>
+                    {{ form.branch }}
+                </div>
+
+                <div class="col-md-4 col-sm-12 col-xs-12 form-group pull-right">
+                    <p class="control-label col-md-4 col-sm-12 col-xs-12 pull-right"> آموزشگاه :</p>
+                    
+                    <select class="form-control" name ="institue_english" id="institue_english">
+                        <option >انتخاب مرکز آموزشی زبان خارجی </option>
+                        {% for institute_english in institutes_english %}
+                        <option value="{{institute_english.id}}"> {{institute_english.name}}</option>
+                    {% endfor %}
+                    </select>
+                </div>
+
+                <div class="col-md-4 col-sm-12 col-xs-12 form-group pull-right">
+                    <p class="control-label col-md-4 col-sm-12 col-xs-12 pull-right"> شهرستان :</p>
+                    
+                    <select class="form-control" name ="institue_english" id="institue_english">
+                        <option >انتخاب  شهرستان</option>
+                        {% for city in cities %}
+                        <option value="{{city.id}}"> {{city.name}}</option>
+                    {% endfor %}
+                    </select>
+                </div>
+          
+
+                <div class="col-md-4 col-sm-12 col-xs-12 form-group pull-right">
+                    <p class="control-label col-md-4 col-sm-12 col-xs-12 pull-right"> منطقه :</p>
+                    
+                    <select class="form-control" name ="institue_english" id="institue_english">
+                        <option >انتخاب منطقه</option>
+                        {% for district in districts %}
+                        <option value="{{district.id}}"> {{district.name}}</option>
+                    {% endfor %}
+                    </select>
+                </div>
+
+                <div class="col-md-4 col-sm-12 col-xs-12 form-group pull-right">
+                    <p class="control-label col-md-4 col-sm-12 col-xs-12 pull-right"> ناحیه :</p>
+                    
+                    <select class="form-control" name ="institue_english" id="institue_english">
+                        <option >انتخاب ناحیه</option>
+                        {% for area in areas %}
+                        <option value="{{area.id}}"> {{area.name}}</option>
+                    {% endfor %}
+                    </select>
+                </div>
+
+                <div class="col-md-4 col-sm-12 col-xs-12 form-group pull-right">
+                    <p class="control-label col-md-4 col-sm-12 col-xs-12 pull-right"> نوع مجوز :</p>
+                    {{ form.permission_type }}
+                </div>
+
+                <div class="col-md-4 col-sm-12 col-xs-12 form-group pull-right">
+                    <p class="control-label col-md-4 col-sm-12 col-xs-12 pull-right"> جنسیت  :</p>
+                    {{ form.sex }}
+                </div>
+
+                <div class="col-md-12 col-sm-12 col-xs-12 form-group pull-right">
+
+                    <div class="col-md-12 col-sm-12 col-xs-12 form-group pull-right">
+                        <label class="control-label col-md-12 col-sm-12 col-xs-12 pull-right">
+                            افزودن دوره  </label>
+
+                    <div class="input-group" id="whoGroup" data-toggle="tooltip">
+
+                        <select class="form-control" name ="institue_english" id="institue_english">
+                            {% for term in terms %}
+                            <option value="{{term.id}}"> {{term.name}}</option>
+                        {% endfor %}
+                        </select>     
+
+                        <span class="input-group-btn">
+                            <button type="button" onclick="add2Team()" class="btn btn-primary"><i
+                                    class="fa fa-plus"></i></button>
+                        </span>
+                    </div>           
+                </div>
+
+
+                  
+                <div class="col-md-12 col-sm-12 col-xs-12 form-group pull-right">
+                    <button type="submit" class="btn btn-primary">ذخیره</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    </div>
+    </form>
+    </div>
+    </section>
+    </div>
+    </div>
+
+
+    {% endblock pageContent %}

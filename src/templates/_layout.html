@@ -39,7 +39,11 @@
           <div class="clearfix"></div>
           <div class="profile">
             <div class="profile_pic">
-              <img src="{% static 'logos/user.png' %}" alt="user-pic" class="img-circle profile_img" />
+              {% if request.user.profile_picture %}
+                  <img src={{request.user.profile_picture.url}} alt="{{ username }}" class="img-circle profile_img">
+              {% else %}
+                  <img src="/media/logos/user.png" alt="{{ username }}" class="img-circle profile_img">
+                {% endif %}
             </div>
             <div class="profile_info">
               <span></span>
@@ -59,7 +63,7 @@
                   <a><i class="fa fa-pencil"></i> کاربر آموزشگاه
                     <span class="fa fa-chevron-down"></span></a>
                   <ul class="nav child_menu">
-                    <li><a href="/form/">اطلاعات پایه</a></li>
+                    <li><a href="#">اطلاعات پایه</a></li>
                   </ul>
                 </li>
                 <li>
@@ -76,8 +80,10 @@
                     <span class="fa fa-chevron-down"></span></a>
                   <ul class="nav child_menu">
                     <li>
-                      <a href="#">
-                        گزارش ثبت شده ها</a>
+                      <a href="{% url 'education:english_institude_register' %}">ثبت</a>
+                    </li>
+                    <li>
+                      <a href="{% url 'education:froms_list' %}">لیست</a>
                     </li>
                   </ul>
                 </li>
@@ -130,7 +136,11 @@
             <ul class="nav navbar-nav navbar-right">
               <li class="clsright">
                 <a href="#" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                  <img src="{% static 'assets/images/img.jpg' %}" alt="..." />
+                  {% if request.user.profile_picture %}
+                  <img src={{request.user.profile_picture.url}} alt="{{ username }}">
+                  {% else %}
+                  <img src="/media/logos/user.png" alt="{{ username }}">
+                  {% endif %}
                   {{request.user.first_name}} {{request.user.last_name}}
                   <span class="fa fa-angle-down"></span>
                 </a>
