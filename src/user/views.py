@@ -14,7 +14,6 @@ def home(request):
     }
     return render (request, '_layout.html', context)
 
-
 def profile(request, *args, **kwargs):
     user_obj = get_object_or_404(User, id=request.user.id)
     user_form = UpdateProfileForm(request.POST or None, request.FILES or None, instance=user_obj)

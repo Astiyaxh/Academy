@@ -1,3 +1,13 @@
 from django.contrib import admin
+from education import models
 
-# Register your models here.
+admin.site.register(models.City)
+admin.site.register(models.District)
+admin.site.register(models.Area)
+admin.site.register(models.EnglishInstitute)
+admin.site.register(models.NonProfitInstitue)
+admin.site.register(models.InstitueActivityType)
+admin.site.register(models.StudyPeriod)
+admin.site.register(models.EnglishInstituteDefineTerm)
+admin.site.register(models.EnglishInstituteRegister)
+admin.site.register(models.EnglishInstituteForm)

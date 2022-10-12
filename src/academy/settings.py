@@ -113,7 +113,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'fa-ir'
 
-TIME_ZONE = 'ASIA/TEHRAN'
+TIME_ZONE = 'UTC'
 
 USE_I18N = True
 
@@ -136,7 +136,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static_cdn')
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media_cdn')
 TEMP = os.path.join(BASE_DIR, 'media_cdn/temp')
 
-BASE_DIR = "http://127.0.0.1:8000"
+BASE_URL = "http://127.0.0.1:8000"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
