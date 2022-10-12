@@ -171,7 +171,7 @@ class EnglishInstituteRegister(models.Model):
     area                    = models.ForeignKey("Area", on_delete=models.PROTECT)
     status                  = models.IntegerField('وضعیت', default=1, choices=StatusChoices)
     send_status             = models.IntegerField('وضعیت ارسال', default=1, choices=SendStatus)
-    type                    = models.IntegerField('نوع', default=1, choices=TypeChoieces)
+    type                    = models.IntegerField('نوع', default=3, choices=TypeChoieces)
     permission_type         = models.IntegerField('نوع مجوز', default=1, choices=PermissionChoieces)
     sex                     = models.IntegerField('جنسیت', default=1, choices=SexChoieces)
     score                   = models.IntegerField('امتیاز کیفیت بخشی مرکز', blank = True)

@@ -39,6 +39,3 @@ def delete_english_institute_forms_list(request,id):
         obj.save()
 
     return HttpResponseRedirect(reverse("education:english_institute_forms_list"))
- 
-
-        
