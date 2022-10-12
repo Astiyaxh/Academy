@@ -55,7 +55,7 @@ class City(models.Model):
     name    = models.CharField('نام', max_length=255, unique=True, )
     status  = models.IntegerField('وضعیت', default=1, choices=StatusChoices)
     def __str__(self):
-        return str(self.id)
+        return str(self.name)
 
 class District(models.Model):
     """
@@ -68,7 +68,7 @@ class District(models.Model):
     name    = models.CharField('نام', max_length=255, unique=True, )
     status  = models.IntegerField('وضعیت', default=1, choices=StatusChoices)
     def __str__(self):
-        return str(self.id)
+        return str(self.name)
 
 class Area(models.Model):
     """
@@ -82,7 +82,7 @@ class Area(models.Model):
     status  = models.IntegerField('وضعیت', default=1, choices=StatusChoices)
 
     def __str__(self):
-        return str(self.id)
+        return str(self.name)
 
 
 class EnglishInstitute(models.Model):
@@ -97,7 +97,7 @@ class EnglishInstitute(models.Model):
     status  = models.IntegerField('وضعیت', default=1, choices=StatusChoices)
 
     def __str__(self):
-        return str(self.id)
+        return str(self.name)
 
 
 class NonProfitInstitue(models.Model):
@@ -112,7 +112,7 @@ class NonProfitInstitue(models.Model):
     status  = models.IntegerField('وضعیت', default=1, choices=StatusChoices)
 
     def __str__(self):
-        return str(self.id)
+        return str(self.name)
 
 class InstitueActivityType(models.Model):
     """
@@ -126,7 +126,7 @@ class InstitueActivityType(models.Model):
     status  = models.IntegerField('وضعیت', default=1, choices=StatusChoices)
 
     def __str__(self):
-        return str(self.id)
+        return str(self.name)
 
 class StudyPeriod(models.Model):
     """
@@ -140,7 +140,7 @@ class StudyPeriod(models.Model):
     status  = models.IntegerField('وضعیت', default=1, choices=StatusChoices)
 
     def __str__(self):
-        return str(self.id)
+        return str(self.name)
 
 class EnglishInstituteDefineTerm(models.Model):
     """
@@ -154,7 +154,7 @@ class EnglishInstituteDefineTerm(models.Model):
     status  = models.IntegerField('وضعیت', default=1, choices=StatusChoices)
 
     def __str__(self):
-        return str(self.id)
+        return str(self.name)
 
 class EnglishInstituteRegister(models.Model):
     """
