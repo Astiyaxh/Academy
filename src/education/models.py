@@ -44,7 +44,6 @@ TypeChoieces = (
     (NonProfitScientificTrainingCenter, "مرکز آموزشی زبان خارجی"),
 )
 
-
 class City(models.Model):
     """
     شهر
