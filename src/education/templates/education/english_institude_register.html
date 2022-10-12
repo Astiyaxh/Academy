@@ -151,7 +151,7 @@
                                     <th>حذف</th>
                                 </tr>
                             </thead>
-                            <tbody id="tblTeam">
+                            <tbody id="TblTerm">
 
                             </tbody>
                         </table>
@@ -163,10 +163,10 @@
 
                             let val = $('#english_term').val();
                             let text = $("#english_term option:selected").text();
-                            var x = document.getElementById("tblTeam").rows.namedItem(val);
+                            var x = document.getElementById("TblTerm").rows.namedItem(val);
                             console.log(x);
                             if (x == null) {
-                                var table = document.getElementById("tblTeam");
+                                var table = document.getElementById("TblTerm");
                                 var row = table.insertRow(tableIndex);
                                 row.id = val;
                                 var cell1 = row.insertCell(0);
@@ -178,7 +178,7 @@
                                 var cell7 = row.insertCell(6);
 
 
-                                cell1.innerHTML = text + "<input name='EnglishInstitudeId' value='" + val + "' class='hidden'>";
+                                cell1.innerHTML = text + "<input name='TermId' value='" + val + "' class='hidden'>";
                                 cell2.innerHTML = "<input name='education_content' required   type='text'>"
                                 cell3.innerHTML = "<input name='session_number' required min='1'  type='number'>"
                                 cell4.innerHTML = "<input name='max_student' required min='1'  type='number'>"
