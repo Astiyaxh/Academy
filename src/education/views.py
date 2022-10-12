@@ -32,7 +32,7 @@ def english_institude_register(request):
 
     return render(request, 'education/english_institude_register.html', context)
 
-
+@login_required
 def english_institute_forms_list(request):
    english_institutes_registers = models.EnglishInstituteRegister.objects.filter(user=request.user)
    context = {
@@ -40,7 +40,7 @@ def english_institute_forms_list(request):
    }
    return render(request, 'education/forms_list.html', context)
 
-
+@login_required
 def delete_english_institute_forms_list(request,id):
     obj = get_object_or_404(models.EnglishInstituteRegister, id = id)
     try:
