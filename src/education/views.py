@@ -2,7 +2,6 @@ from django.shortcuts import render,HttpResponseRedirect ,get_object_or_404
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from education import models,forms
-from django.urls import reverse
 
 @login_required
 def english_institude_register(request):
@@ -29,7 +28,7 @@ def english_institude_register(request):
             if len(term_ids) > 0:
                 for term_id,education_content,session_number,max_student,session_price,nsession_price in zip(term_ids,education_contents,session_numbers,max_students,session_prices,nsession_prices):
                     models.EnglishInstituteForm.objects.create(english_institute_register = obj , english_institute_define_term = models.EnglishInstituteDefineTerm.objects.get(id = term_id ),education_content = education_content, session_number = session_number,max_student = max_student, session_price = session_price,nsession_price = nsession_price )
-            return HttpResponseRedirect(reverse('education:froms_list'))
+            return HttpResponseRedirect(reverse('education:english_institute_forms_list'))
 
     return render(request, 'education/english_institude_register.html', context)
 
