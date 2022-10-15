@@ -12,6 +12,6 @@ urlpatterns = [
     
     # Admin Urls
     path('admin_forms_list/', views.admin_forms_list, name='admin_forms_list'),
-    path('admin_rejected_forms_list/<int:id>', views.admin_rejected_forms_list, name='admin_forms_list'),
-    path('admin_accepted_forms_list/<int:id>', views.admin_accepted_forms_list, name='admin_forms_list'),
+    path('admin_rejected_forms_list/<int:id>', views.admin_rejected_forms_list, name='admin_rejected_forms_list'),
+    path('admin_accepted_forms_list/<int:id>', views.admin_accepted_forms_list, name='admin_accepted_forms_list'),
 ]
