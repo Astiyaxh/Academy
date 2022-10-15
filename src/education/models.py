@@ -156,6 +156,20 @@ class EnglishInstituteDefineTerm(models.Model):
     def __str__(self):
         return str(self.name)
 
+class NonProfitInstituteDefineTerm(models.Model):
+    """
+    تعریف سطح دوره مرکز آموزش علمی آزاد
+    """
+    class Meta:
+        verbose_name        = 'تعریف سطح دوره مرکز آموزش علمی آزاد'
+        verbose_name_plural = 'تعریف سطح دوره مرکز آموزش علمی آزاد'
+
+    name    = models.CharField('نام', max_length=255, unique=True, )
+    status  = models.IntegerField('وضعیت', default=1, choices=StatusChoices)
+
+    def __str__(self):
+        return str(self.name)
+
 class EnglishInstituteRegister(models.Model):
     """
     ثبت نام مرکز آموزش زبان خارجه
@@ -199,6 +213,57 @@ class EnglishInstituteForm(models.Model):
     max_student                         = models.IntegerField('حداکثر تعداد دانش آموز',)
     session_price                       = models.IntegerField('نرخ یک جلسه آموزشی',)
     nsession_price                      = models.IntegerField('نرخ یک دوره آموزشی بر اساس N جلسه',)
+
+    def __str__(self):
+        return str(self.id)
+
+
+class NoneProfitForm(models.Model):
+    """
+    فرم ثبت مرکز آموزشی علمی آزاد
+    """
+    class Meta:
+        verbose_name        = 'فرم ثبت مرکز آموزشی علمی آزاد'
+        verbose_name_plural = 'فرم ثبت مرکز آموزشی علمی آزاد'
+
+
+    user                    = models.ForeignKey(User, on_delete=models.PROTECT)
+    non_proft_institute     = models.ForeignKey("NonProfitInstitue", on_delete=models.PROTECT)
+    city                    = models.ForeignKey("City", on_delete=models.PROTECT)
+    district                = models.ForeignKey("District", on_delete=models.PROTECT)
+    area                    = models.ForeignKey("Area", on_delete=models.PROTECT)
+    status                  = models.IntegerField('وضعیت', default=1, choices=StatusChoices)
+    send_status             = models.IntegerField('وضعیت ارسال', default=1, choices=SendStatus)
+    type                    = models.IntegerField('نوع', default=2, choices=TypeChoieces)
+    permission_type         = models.IntegerField('نوع مجوز', default=1, choices=PermissionChoieces)
+    sex                     = models.IntegerField('جنسیت', default=1, choices=SexChoieces)
+    score                   = models.IntegerField('امتیاز کیفیت بخشی مرکز', blank = True)
+    name_founder            = models.CharField('نام و نام خانوادگی موسس', max_length=255)
+    name_manager            = models.CharField('نام و نام خانوادگی مدیر', max_length=255)
+    bin_number              = models.CharField('شماره حساب مرکز', max_length=255)
+    bank                    = models.CharField('نزد بانک', max_length=255)
+    branch                  = models.CharField('شعبه', max_length=255)
+
+    def __str__(self):
+        return str(self.id)
+
+
+
+class NoneProfitFormTable(models.Model):
+    """
+    جدول ثبت مرکز علمی آزاد
+    """
+    class Meta:
+        verbose_name        = 'جدول ثبت مرکز علمی آزاد'
+        verbose_name_plural = 'جدول ثبت مرکز علمی آزاد'
+
+    non_profit_institute_define_term        = models.ForeignKey("NonProfitInstituteDefineTerm", on_delete=models.PROTECT)
+    none_profit_form                        = models.ForeignKey("NoneProfitForm", on_delete=models.CASCADE)
+    education_content                       = models.CharField('محتوا آموزشی', max_length=255)
+    session_number                          = models.IntegerField('تعداد جلسات',)
+    max_student                             = models.IntegerField('حداکثر تعداد دانش آموز',)
+    max_hour                                = models.IntegerField('میزان کل ساعت دوره',)
+    tuition                                 = models.IntegerField('شهریه مصوب دوره',)
 
     def __str__(self):
         return str(self.id)
