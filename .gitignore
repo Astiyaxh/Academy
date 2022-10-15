@@ -135,10 +135,7 @@ __pycache__/
 db.sqlite3
 *.log
 *.pot
-*/migrations/*
-education/migrations/
-report/migrations/
-user/migrations/
+**/migrations/*
 */media/*
 media
 static/
