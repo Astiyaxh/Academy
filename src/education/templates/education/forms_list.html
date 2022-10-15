@@ -126,7 +126,7 @@
                                 </td>
                                 <!--عملیات-->
                                 <td>
-                                    <a class="btn btn-success" href="{% url 'education:english_institude_edit' id=english_institutes_register.id %}">ویرایش</a>
+                                    <a class="btn btn-success" href="{% url 'education:english_institute_edit' id=english_institutes_register.id %}">ویرایش</a>
                                     <a class="btn btn-danger" href="{% url 'education:delete_english_institute_forms_list' id=english_institutes_register.id %}">حذف</a>
                                     {% if english_institutes_register.send_status == 1 %}
                                     <a class="btn btn-primary" href="{% url 'education:send_english_institute_forms_list' id=english_institutes_register.id %}">ارسال</a>
