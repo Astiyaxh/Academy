@@ -113,7 +113,7 @@
                                     {% endif %}               
                                 </td>
                                 <!--وضعیت-->
-                                <td style="text-align: center;">                                                
+                                <td style="text-align: center;">
                                     {% if english_institutes_register.send_status == 2 %}
                                     <span >ارسال شده</span>
                                     {% elif english_institutes_register.send_status == 3 %}
@@ -124,11 +124,10 @@
                                 </td>
                                 <!--عملیات-->
                                 <td>
-                                    <a class="btn btn-success" href="{% url 'education:english_institute_edit' id=english_institutes_register.id %}">ویرایش</a>
-                                    <a class="btn btn-danger" href="{% url 'education:delete_english_institute_forms_list' id=english_institutes_register.id %}">حذف</a>
-                                    {% if english_institutes_register.send_status == 1 %}
-                                    <a class="btn btn-primary" href="{% url 'education:send_english_institute_forms_list' id=english_institutes_register.id %}">ارسال</a>
-                                    {% endif %}                          
+                                    {% if english_institutes_register.send_status == 2 %}
+                                    <a class="btn btn-success" href="{% url 'education:admin_accepted_forms_list' id=english_institutes_register.id %}">تایید</a>
+                                    <a class="btn btn-danger" href="{% url 'education:admin_rejected_forms_list' id=english_institutes_register.id %}">رد</a>
+                                    {% endif %}
                                     <!-- {% if english_institutes_register.user == user %}
                                             <a class="btn btn-primary" href="/EditExperience/{{ english_institutes_register.id }}"> ویرایش </a>
                                             <a class="btn btn-danger" data-toggle="modal" data-target="#exampleModal2"

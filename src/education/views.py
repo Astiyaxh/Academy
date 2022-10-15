@@ -135,7 +135,7 @@ def send_english_institute_forms_list(request,id):
 
 @login_required
 def admin_forms_list(request):
-   english_institutes_registers = models.EnglishInstituteRegister.objects.filter(user=request.user)
+   english_institutes_registers = models.EnglishInstituteRegister.objects.filter(user=request.user).filter(send_status=2)
    context = {
     'english_institutes_registers' : english_institutes_registers
    }
