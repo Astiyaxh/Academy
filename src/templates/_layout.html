@@ -46,14 +46,12 @@
                 {% endif %}
             </div>
             <div class="profile_info">
-              <span></span>
-              <h2>{{request.user.first_name}} {{request.user.last_name}}</h2>
+              <span></span>          
             </div>
           </div>
           <br />
           <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
             <div class="menu_section">
-              <h3>مدیر</h3>
               <ul class="nav side-menu">
                 <li>
                   <a href="{% url 'home' %}"><i class="fa fa-home"></i>خانه</a>
@@ -141,7 +139,12 @@
                   {% else %}
                   <img src="/media/logos/user.png" alt="{{ username }}">
                   {% endif %}
-                  {{request.user.first_name}} {{request.user.last_name}}
+                  {% if request.user.get_full_name  %}
+                  {{ request.user.get_full_name }}
+                  {% else %}
+                  {{ request.user.username }}
+
+                  {% endif %}
                   <span class="fa fa-angle-down"></span>
                 </a>
                 <ul class="dropdown-menu dropdown-usermenu pull-right">
@@ -169,7 +172,6 @@
         <div class="">
           <div class="page-title">
             <div class="title_left">
-              <h3>خانه</h3>
             </div>
             <div class="title_right">
               <div class="col-md-5 col-sm-5 form-group row pull-right top_search">
