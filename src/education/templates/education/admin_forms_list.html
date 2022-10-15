@@ -113,10 +113,8 @@
                                     {% endif %}               
                                 </td>
                                 <!--وضعیت-->
-                                <td style="text-align: center;">                                    
-                                    {% if english_institutes_register.send_status == 1 %}
-                                    <span >ثبت شده</span>               
-                                    {% elif english_institutes_register.send_status == 2 %}
+                                <td style="text-align: center;">                                                
+                                    {% if english_institutes_register.send_status == 2 %}
                                     <span >ارسال شده</span>
                                     {% elif english_institutes_register.send_status == 3 %}
                                     <span >رد شده</span>
