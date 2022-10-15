@@ -2,6 +2,7 @@ from django.shortcuts import render,HttpResponseRedirect ,get_object_or_404
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from education import models,forms
+from itertools import chain
 
 @login_required
 def english_institute_register(request):
@@ -105,8 +106,11 @@ def none_profit_form_register(request):
 @login_required
 def english_institute_forms_list(request):
    english_institutes_registers = models.EnglishInstituteRegister.objects.filter(user=request.user)
+   non_profit_forms = models.NoneProfitForm.objects.filter(user=request.user)
+   query_set = chain(english_institutes_registers, non_profit_forms)
+
    context = {
-    'english_institutes_registers' : english_institutes_registers
+    'english_institutes_registers' : query_set
    }
    return render(request, 'education/forms_list.html', context)
 
