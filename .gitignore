@@ -136,8 +136,9 @@ db.sqlite3
 *.log
 *.pot
 */migrations/*
-migrations/
-.migrations/
+education/migrations/
+report/migrations/
+user/migrations/
 */media/*
 media
 static/
