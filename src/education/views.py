@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from education import models,forms
 
 @login_required
-def english_institude_register(request):
+def english_institute_register(request):
     form = forms.EnglishInstituteRegisterForm(request.POST or None)
     terms = models.EnglishInstituteDefineTerm.objects.filter(status = 1)
     context = dict()
@@ -34,7 +34,7 @@ def english_institude_register(request):
 
 
 @login_required
-def english_institude_edit(request,id):
+def english_institute_edit(request,id):
     obj = get_object_or_404(models.EnglishInstituteRegister, id = id)
     form = forms.EnglishInstituteRegisterForm(request.POST or None, instance= obj )
     terms = models.EnglishInstituteDefineTerm.objects.filter(status = 1)
@@ -98,4 +98,33 @@ def send_english_institute_forms_list(request,id):
     obj.save()
 
     return HttpResponseRedirect(reverse("education:english_institute_forms_list"))
+
+
+
+# Admin views
+
+@login_required
+def admin_forms_list(request):
+   english_institutes_registers = models.EnglishInstituteRegister.objects.filter(user=request.user)
+   context = {
+    'english_institutes_registers' : english_institutes_registers
+   }
+   return render(request, 'education/admin_forms_list.html', context)
+
+@login_required
+def admin_rejected_forms_list(request,id):
+    obj = get_object_or_404(models.EnglishInstituteRegister, id = id)
+    obj.send_status = 3
+    obj.save()
+
+    return HttpResponseRedirect(reverse("education:admin_forms_list"))
+
+
+@login_required
+def admin_accepted_forms_list(request,id):
+    obj = get_object_or_404(models.EnglishInstituteRegister, id = id)
+    obj.send_status = 4
+    obj.save()
+
+    return HttpResponseRedirect(reverse("education:admin_forms_list"))
 
