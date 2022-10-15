@@ -9,7 +9,10 @@ urlpatterns = [
     path('english_institute_forms_list/', views.english_institute_forms_list, name='english_institute_forms_list'),
     path('delete_english_institute_forms_list/<int:id>', views.delete_english_institute_forms_list, name='delete_english_institute_forms_list'),
     path('send_english_institute_forms_list/<int:id>', views.send_english_institute_forms_list, name='send_english_institute_forms_list'),
-    
+
+    # None Profit institute urls 
+    path('none_profit_form_register/', views.none_profit_form_register, name='none_profit_form_register'),
+
     # Admin Urls
     path('admin_forms_list/', views.admin_forms_list, name='admin_forms_list'),
     path('admin_rejected_forms_list/<int:id>', views.admin_rejected_forms_list, name='admin_rejected_forms_list'),
