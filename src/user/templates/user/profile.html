@@ -158,12 +158,6 @@ $('#myModal').modal('show');
 <script>
     $("#id_birthdate").hide();
 </script>
-<script>
-    $(window).load(function(){
-        var element = document.getElementById("profile_picture-clear_id");
-        element.classList.remove("form-control");
-    })
-</script>
 {% endblock %}
 
 {% block cssBlock %}
@@ -180,9 +174,6 @@ $('#myModal').modal('show');
           rel="stylesheet">
 
           <style>
-            .modal-body{
-                font-size: 17px;
-            }
             .hide{
               display:none;
             }
@@ -348,6 +339,7 @@ $('#myModal').modal('show');
             <div class="x_content">
                 <ul class="nav nav-tabs">
                     <li class="active" ><a id="organPorposTab" data-toggle="tab" href="#organPorpos"> اطلاعات پایه</a></li>
+                    <li><a data-toggle="tab" id="organChartTab" href="#editorganchart">ویرایش اطلاعات حرفه ای</a></li>
                   </ul>
                   <form action="" method="post" enctype="multipart/form-data" style="background-color: white" novalidate>
                     {% csrf_token %}
@@ -411,6 +403,44 @@ $('#myModal').modal('show');
                     </div>
                     <div class="clearfix"></div>
                   </div>
+                    <div id="editorganchart" class="tab-pane fade">
+                        <script>
+                            var tableIndex2 = 0;
+                            function add_pro_degree() {
+                                if(document.getElementById("degree_title").value.length == 0)
+                                    {
+                                        alert("عنوان نمیتواند خالی باشد")
+                                    }
+                                let val2 = $('#degree_title').val();
+                                console.log(val2)
+                                let text2 = $('#degree_title').val();
+                                var x2 = document.getElementById("tblFile").rows.namedItem(val2);
+                                console.log(x2);
+                                if (x2 == null && text2.trim() !='') {
+                                    var table2 = document.getElementById("tblFile");
+                                    var row2 = table2.insertRow(tableIndex2);
+                                    row2.id = val2;
+                                    var cell11 = row2.insertCell(0);
+                                    var cell22 = row2.insertCell(1);
+                                    var cell33 = row2.insertCell(2);
+                                    cell11.innerHTML = text2 + "<input name='degree_title' value='" + val2.trim() + "' class='hidden'>";
+                                    cell22.innerHTML="<input name='degree_files' required type='file' class=''>"
+                                    cell33.innerHTML = "<span class='glyphicon glyphicon-trash row-remover2 btn btn-danger '></span>";
+                                    tableIndex2++;
+                                }
+                                $('#degree_title').val('')
+                            }
+                            $("body").on('click', '.row-remover2', function() {
+                                $(this).closest('tr').remove();
+                                tableIndex2--;
+                            });
+                        </script>
+                        <!-- MODAL 1 -->
+                        <a type="button" style="border: solid black 1px;" class="btn btn-light" data-toggle="modal" data-target="#degree">
+                            <img src="static/assets/images/document-file-svgrepo-com.svg" style="width:50px;height:50px;" alt="">
+                            اطلاعات حرفه ای
+                        </a>
+  </div>
 
 
                     <div class="col-md-3 col-sm-4 col-xs-4 form-group pull-right">
@@ -420,7 +450,7 @@ $('#myModal').modal('show');
 
             </div>
             </form>
-            {% for field in user %}
+            {% for field in members_form %}
             {% if field.errors %}
                 <div class="alert alert-danger">
                     {{ field.label_tag }} {{ field.errors }}
@@ -434,15 +464,17 @@ $('#myModal').modal('show');
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
         <div class="modal-body">
-          تغییرات شما با موفقیت ثبت شد
+          ...
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-danger" data-dismiss="modal">بستن پنجره</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button>
         </div>
       </div>
     </div>
