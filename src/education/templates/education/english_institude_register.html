@@ -155,6 +155,33 @@
                             </thead>
                             <tbody id="TblTerm">
 
+                                {% for table_term in table_terms %}
+                                <tr id="{{item.TeamMember.member}}">
+                                    <td>
+                                        {{ table_term.english_institute_define_term.name }}
+                                        <input name='TermId' value='{{ table_term.english_institute_define_term.id }}' class='hidden'>
+                                    </td>
+                                    <td>
+                                        <input name='education_content' required value="{{ table_term.education_content }}"   type='text'>
+                                    </td>
+                                    <td>
+                                        <input name='session_number' required value="{{ table_term.session_number }}"   type='number'>
+                                    </td>
+                                    <td>
+                                        <input name='max_student' required value="{{ table_term.max_student }}"   type='number'>
+                                    </td>
+                                    <td>
+                                        <input name='session_price' required value="{{ table_term.session_price }}"   type='number'>
+                                    </td>
+                                    <td>
+                                        <input name='nsession_price' required value="{{ table_term.nsession_price }}"   type='number'>
+                                    </td>
+                                    <td>
+                                        <span class='glyphicon glyphicon-trash row-remover btn btn-danger '></span>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+
                             </tbody>
                         </table>
                     </div>
