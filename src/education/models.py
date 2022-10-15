@@ -198,7 +198,7 @@ class EnglishInstituteForm(models.Model):
     session_number                      = models.IntegerField('تعداد جلسات',)
     max_student                         = models.IntegerField('حداکثر تعداد دانش آموز',)
     session_price                       = models.IntegerField('نرخ یک جلسه آموزشی',)
-    nsession_price                      = models.IntegerField('نرخ یک دوره آموزشی بر اساس ان جلسه',)
+    nsession_price                      = models.IntegerField('نرخ یک دوره آموزشی بر اساس N جلسه',)
 
     def __str__(self):
         return str(self.id)

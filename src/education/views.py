@@ -90,3 +90,12 @@ def delete_english_institute_forms_list(request,id):
         obj.save()
 
     return HttpResponseRedirect(reverse("education:english_institute_forms_list"))
+
+@login_required
+def send_english_institute_forms_list(request,id):
+    obj = get_object_or_404(models.EnglishInstituteRegister, id = id)
+    obj.send_status = 2
+    obj.save()
+
+    return HttpResponseRedirect(reverse("education:english_institute_forms_list"))
+
