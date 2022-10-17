@@ -12,6 +12,7 @@ urlpatterns = [
 
     # None Profit institute urls 
     path('none_profit_form_register/', views.none_profit_form_register, name='none_profit_form_register'),
+    path('none_profit_form_edit/<int:id>', views.none_profit_form_edit, name='none_profit_form_edit'),
 
     # Admin Urls
     path('admin_forms_list/', views.admin_forms_list, name='admin_forms_list'),

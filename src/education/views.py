@@ -104,6 +104,46 @@ def none_profit_form_register(request):
 
 
 @login_required
+def none_profit_form_edit(request,id):
+    obj = get_object_or_404(models.NoneProfitForm, id = id)
+    form = forms.NoneProfitFormForm(request.POST or None, instance= obj )
+    terms = models.NonProfitInstituteDefineTerm.objects.filter(status = 1)
+    context = dict()
+    context.update({
+        'terms':terms,
+        'form':form,
+    })
+
+    if  models.NoneProfitFormTable.objects.filter(none_profit_form = obj).exists():
+        table_terms = models.NoneProfitFormTable.objects.filter(none_profit_form = obj)
+        context.update({
+            'table_terms':table_terms,
+        })
+        
+    if request.method == "POST":
+        term_ids = request.POST.getlist('TermId')
+        education_contents = request.POST.getlist('education_content')
+        session_numbers = request.POST.getlist('session_number')
+        max_students = request.POST.getlist('max_student')
+        max_hours = request.POST.getlist('max_hour')
+        tuitions = request.POST.getlist('tution')
+
+
+        if form.is_valid():
+            obj = form.save()
+            obj.user = request.user
+            obj.save()
+            if  models.NoneProfitFormTable.objects.filter(none_profit_form = obj).exists():
+                models.NoneProfitFormTable.objects.filter(none_profit_form = obj).delete()
+            if len(term_ids) > 0:
+                for term_id,education_content,session_number,max_student,max_hour,tution in zip(term_ids,education_contents,session_numbers,max_students,max_hours,tuitions):
+                    models.NoneProfitFormTable.objects.create(none_profit_form = obj , non_profit_institute_define_term = models.NonProfitInstituteDefineTerm.objects.get(id = term_id ),education_content = education_content, session_number = session_number,max_student = max_student, max_hour = max_hour,tuition = tution )
+            return HttpResponseRedirect(reverse('education:english_institute_forms_list'))
+
+    return render(request, 'education/non_profit_institude_register.html', context)
+
+
+@login_required
 def english_institute_forms_list(request):
    english_institutes_registers = models.EnglishInstituteRegister.objects.filter(user=request.user)
    non_profit_forms = models.NoneProfitForm.objects.filter(user=request.user)
