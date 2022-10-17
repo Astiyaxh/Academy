@@ -309,49 +309,6 @@ $('#myModal').modal('show');
                     </div>
                     <div class="clearfix"></div>
                   </div>
-<<<<<<< HEAD
-                    <div id="editorganchart" class="tab-pane fade">
-                        <script>
-                            var tableIndex2 = 0;
-                            function add_pro_degree() {
-                                if(document.getElementById("degree_title").value.length == 0)
-                                    {
-                                        alert("عنوان نمیتواند خالی باشد")
-                                    }
-                                let val2 = $('#degree_title').val();
-                                console.log(val2)
-                                let text2 = $('#degree_title').val();
-                                var x2 = document.getElementById("tblFile").rows.namedItem(val2);
-                                console.log(x2);
-                                if (x2 == null && text2.trim() !='') {
-                                    var table2 = document.getElementById("tblFile");
-                                    var row2 = table2.insertRow(tableIndex2);
-                                    row2.id = val2;
-                                    var cell11 = row2.insertCell(0);
-                                    var cell22 = row2.insertCell(1);
-                                    var cell33 = row2.insertCell(2);
-                                    cell11.innerHTML = text2 + "<input name='degree_title' value='" + val2.trim() + "' class='hidden'>";
-                                    cell22.innerHTML="<input name='degree_files' required type='file' class=''>"
-                                    cell33.innerHTML = "<span class='glyphicon glyphicon-trash row-remover2 btn btn-danger '></span>";
-                                    tableIndex2++;
-                                }
-                                $('#degree_title').val('')
-                            }
-                            $("body").on('click', '.row-remover2', function() {
-                                $(this).closest('tr').remove();
-                                tableIndex2--;
-                            });
-                        </script>
-                        <!-- MODAL 1 -->
-                        <a type="button" style="border: solid black 1px;" class="btn btn-light" data-toggle="modal" data-target="#degree">
-                            <img src="static/assets/images/document-file-svgrepo-com.svg" style="width:50px;height:50px;" alt="">
-                            اطلاعات حرفه ای
-                        </a>
-                    </div>
-
-=======
->>>>>>> 87d5b895f619b1d438173dbacf145a927a165577
-
                     <div class="col-md-3 col-sm-4 col-xs-4 form-group pull-right">
                         <button type="submit" class="btn btn-success">ذخیره</button>
                     </div>
@@ -386,12 +343,6 @@ $('#myModal').modal('show');
       </div>
     </div>
   </div>
-
-<<<<<<< HEAD
-=======
     </div>
 </div>
-
-
->>>>>>> 87d5b895f619b1d438173dbacf145a927a165577
 {% endblock %}
