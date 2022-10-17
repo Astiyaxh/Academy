@@ -1,10 +1,11 @@
 from django.shortcuts import render,HttpResponseRedirect ,get_object_or_404
 from django.urls import reverse
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required,user_passes_test
 from education import models,forms
 from itertools import chain
 
 @login_required
+@user_passes_test(lambda u: u.groups.filter(name='English').exists())
 def english_institute_register(request):
     form = forms.EnglishInstituteRegisterForm(request.POST or None)
     terms = models.EnglishInstituteDefineTerm.objects.filter(status = 1)
@@ -35,6 +36,7 @@ def english_institute_register(request):
 
 
 @login_required
+@user_passes_test(lambda u: u.groups.filter(name='English').exists())
 def english_institute_edit(request,id):
     obj = get_object_or_404(models.EnglishInstituteRegister, id = id)
     form = forms.EnglishInstituteRegisterForm(request.POST or None, instance= obj )
@@ -74,6 +76,7 @@ def english_institute_edit(request,id):
 
 
 @login_required
+@user_passes_test(lambda u: u.groups.filter(name='NonProfit').exists())
 def none_profit_form_register(request):
     form = forms.NoneProfitFormForm(request.POST or None)
     terms = models.NonProfitInstituteDefineTerm.objects.filter(status = 1)
@@ -104,6 +107,7 @@ def none_profit_form_register(request):
 
 
 @login_required
+@user_passes_test(lambda u: u.groups.filter(name='NonProfit').exists())
 def none_profit_form_edit(request,id):
     obj = get_object_or_404(models.NoneProfitForm, id = id)
     form = forms.NoneProfitFormForm(request.POST or None, instance= obj )
@@ -155,6 +159,7 @@ def english_institute_forms_list(request):
    return render(request, 'education/forms_list.html', context)
 
 @login_required
+@user_passes_test(lambda u: u.groups.filter(name='English').exists())
 def delete_english_institute_forms_list(request,id):
     obj = get_object_or_404(models.EnglishInstituteRegister, id = id)
     try:
@@ -166,6 +171,7 @@ def delete_english_institute_forms_list(request,id):
     return HttpResponseRedirect(reverse("education:english_institute_forms_list"))
 
 @login_required
+@user_passes_test(lambda u: u.groups.filter(name='English').exists())
 def send_english_institute_forms_list(request,id):
     obj = get_object_or_404(models.EnglishInstituteRegister, id = id)
     obj.send_status = 2
@@ -178,6 +184,7 @@ def send_english_institute_forms_list(request,id):
 # Admin views
 
 @login_required
+@user_passes_test(lambda u: u.groups.filter(name='SuperVisor').exists())
 def admin_forms_list(request):
    english_institutes_registers = models.EnglishInstituteRegister.objects.filter(user=request.user).filter(send_status=2)
    context = {
@@ -186,6 +193,7 @@ def admin_forms_list(request):
    return render(request, 'education/admin_forms_list.html', context)
 
 @login_required
+@user_passes_test(lambda u: u.groups.filter(name='SuperVisor').exists())
 def admin_rejected_forms_list(request,id):
     obj = get_object_or_404(models.EnglishInstituteRegister, id = id)
     obj.send_status = 3
@@ -195,6 +203,7 @@ def admin_rejected_forms_list(request,id):
 
 
 @login_required
+@user_passes_test(lambda u: u.groups.filter(name='SuperVisor').exists())
 def admin_accepted_forms_list(request,id):
     obj = get_object_or_404(models.EnglishInstituteRegister, id = id)
     obj.send_status = 4
