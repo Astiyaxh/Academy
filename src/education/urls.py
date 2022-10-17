@@ -12,9 +12,15 @@ urlpatterns = [
 
     # None Profit institute urls 
     path('none_profit_form_register/', views.none_profit_form_register, name='none_profit_form_register'),
+    path('delete_nonprofit_institute_forms_list/<int:id>', views.delete_nonprofit_institute_forms_list, name='delete_nonprofit_institute_forms_list'),
+    path('send_nonprofit_institute_forms_list/<int:id>', views.send_nonprofit_institute_forms_list, name='send_nonprofit_institute_forms_list'),
 
-    # Admin Urls
+    # Admin English Institute Urls
     path('admin_forms_list/', views.admin_forms_list, name='admin_forms_list'),
     path('admin_rejected_forms_list/<int:id>', views.admin_rejected_forms_list, name='admin_rejected_forms_list'),
     path('admin_accepted_forms_list/<int:id>', views.admin_accepted_forms_list, name='admin_accepted_forms_list'),
+
+    # Admin Profit Institute Urls
+    path('admin_nonprofit_institute_rejected_forms_list/<int:id>', views.admin_nonprofit_institute_rejected_forms_list, name='admin_nonprofit_institute_rejected_forms_list'),
+    path('admin_nonprofit_institute_accepted_forms_list/<int:id>', views.admin_nonprofit_institute_accepted_forms_list, name='admin_nonprofit_institute_accepted_forms_list'),
 ]

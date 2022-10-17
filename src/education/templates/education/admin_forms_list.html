@@ -90,48 +90,69 @@
                         </tr>
                         </thead>
                         <tbody>
-                        {% for english_institutes_register in english_institutes_registers %}
+                        {% for query_set in query_sets %}
                             <tr>
                                 <!--ردیف-->
                                 <td>{{ forloop.counter }}</td>
                                 <!--ثبت کننده-->
                                 <td>
-                                {% if english_institutes_register.user.first_name and english_institutes_register.user.last_name %}
-                                    {{ english_institutes_register.user.first_name }} {{ english_institutes_register.user.last_name }}
+                                {% if query_set.user.first_name and query_set.user.last_name %}
+                                    {{ query_set.user.first_name }} {{ query_set.user.last_name }}
                                 {% else %}
-                                    {{ english_institutes_register.user.username }}
+                                    {{ query_set.user.username }}
                                 {% endif %}
                                 </td>
                                 <!--نوع فرم-->
                                 <td>                             
-                                    {% if english_institutes_register.type == 1 %}
+                                    {% if query_set.type == 1 %}
                                         <span>آموزشگاه</span>
-                                    {% elif english_institutes_register.type == 2 %}
+                                    {% elif query_set.type == 2 %}
                                         <span>علمی آزاد</span>
-                                    {% elif english_institutes_register.type == 3 %}
+                                    {% elif query_set.type == 3 %}
                                         <span>زبان خارجی</span>
                                     {% endif %}               
                                 </td>
                                 <!--وضعیت-->
                                 <td style="text-align: center;">
-                                    {% if english_institutes_register.send_status == 2 %}
+                                    {% if query_set.send_status == 2 %}
                                     <span >ارسال شده</span>
-                                    {% elif english_institutes_register.send_status == 3 %}
+                                    {% elif query_set.send_status == 3 %}
                                     <span >رد شده</span>
-                                    {% elif english_institutes_register.send_status == 4 %}
+                                    {% elif query_set.send_status == 4 %}
                                     <span >تایید شده</span>
                                     {% endif %}
                                 </td>
                                 <!--عملیات-->
                                 <td>
-                                    {% if english_institutes_register.send_status == 2 %}
-                                    <a class="btn btn-success" href="{% url 'education:admin_accepted_forms_list' id=english_institutes_register.id %}">تایید</a>
-                                    <a class="btn btn-danger" href="{% url 'education:admin_rejected_forms_list' id=english_institutes_register.id %}">رد</a>
+                                    <!--Institute-->
+                                    {% if query_set.type == 1 %}
+                                        {% if query_set.send_status == 2 %}
+                                        <a class="btn btn-success" href="{% url 'education:admin_accepted_forms_list' id=query_set.id %}">تایید</a>
+                                        <a class="btn btn-danger" href="{% url 'education:admin_rejected_forms_list' id=query_set.id %}">رد</a>
+                                        {% endif %}
                                     {% endif %}
-                                    <!-- {% if english_institutes_register.user == user %}
-                                            <a class="btn btn-primary" href="/EditExperience/{{ english_institutes_register.id }}"> ویرایش </a>
+
+                                    <!--English Institute-->
+                                    {% if query_set.type == 2 %}
+                                        {% if query_set.send_status == 2 %}
+                                        <a class="btn btn-success" href="{% url 'education:admin_nonprofit_institute_accepted_forms_list' id=query_set.id %}">تایید</a>
+                                        <a class="btn btn-danger" href="{% url 'education:admin_nonprofit_institute_rejected_forms_list' id=query_set.id %}">رد</a>
+                                        {% endif %}
+                                    {% endif %}
+
+                                    <!--Nonprofit Institute-->
+                                    {% if query_set.type == 3 %}
+                                        {% if query_set.send_status == 2 %}
+                                        <a class="btn btn-success" href="{% url 'education:admin_accepted_forms_list' id=query_set.id %}">تایید</a>
+                                        <a class="btn btn-danger" href="{% url 'education:admin_rejected_forms_list' id=query_set.id %}">رد</a>
+                                        {% endif %}
+                                    {% endif %}
+                                        
+                                    
+                                    <!-- {% if query_set.user == user %}
+                                            <a class="btn btn-primary" href="/EditExperience/{{ query_set.id }}"> ویرایش </a>
                                             <a class="btn btn-danger" data-toggle="modal" data-target="#exampleModal2"
-                                            onclick="document.getElementById('delete_link').href='/delete_forms_list/{{ english_institutes_register.id }}'">حذف</a>
+                                            onclick="document.getElementById('delete_link').href='/delete_forms_list/{{ query_set.id }}'">حذف</a>
                                     {% endif %}
                                     <a class="btn btn-success" href="#">کاربرگ</a> -->
                                 </td>

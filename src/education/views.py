@@ -135,18 +135,20 @@ def send_english_institute_forms_list(request,id):
 
 
 
-# Admin views
+# Admin views for EnglishInstituteRegister
 
 @login_required
 def admin_forms_list(request):
-   english_institutes_registers = models.EnglishInstituteRegister.objects.filter(user=request.user).filter(send_status=2)
+   english_institutes_registers = models.EnglishInstituteRegister.objects.filter(send_status=2)
+   nonprofit_form = models.NoneProfitForm.objects.filter(send_status=2)
+   query_sets = chain(english_institutes_registers, nonprofit_form)
    context = {
-    'english_institutes_registers' : english_institutes_registers
+    'query_sets' : query_sets
    }
    return render(request, 'education/admin_forms_list.html', context)
 
 @login_required
-def admin_rejected_forms_list(request,id):
+def admin_rejected_forms_list(request, id):
     obj = get_object_or_404(models.EnglishInstituteRegister, id = id)
     obj.send_status = 3
     obj.save()
@@ -155,10 +157,53 @@ def admin_rejected_forms_list(request,id):
 
 
 @login_required
-def admin_accepted_forms_list(request,id):
+def admin_accepted_forms_list(request, id):
     obj = get_object_or_404(models.EnglishInstituteRegister, id = id)
     obj.send_status = 4
     obj.save()
 
     return HttpResponseRedirect(reverse("education:admin_forms_list"))
 
+
+
+#  Nonprofit institute 
+
+@login_required
+def delete_nonprofit_institute_forms_list(request, id):
+    obj = get_object_or_404(models.NoneProfitForm, id = id)
+    try:
+        obj.delete()
+    except:
+        obj.status = -1
+        obj.save()
+
+    return HttpResponseRedirect(reverse("education:english_institute_forms_list"))
+
+@login_required
+def send_nonprofit_institute_forms_list(request, id):
+    obj = get_object_or_404(models.NoneProfitForm, id = id)
+    obj.send_status = 2
+    obj.save()
+
+    return HttpResponseRedirect(reverse("education:english_institute_forms_list"))
+
+
+
+# Admin views for nonprofit institute
+
+@login_required
+def admin_nonprofit_institute_rejected_forms_list(request, id):
+    obj = get_object_or_404(models.NoneProfitForm, id = id)
+    obj.send_status = 3
+    obj.save()
+
+    return HttpResponseRedirect(reverse("education:admin_forms_list"))
+
+
+@login_required
+def admin_nonprofit_institute_accepted_forms_list(request, id):
+    obj = get_object_or_404(models.NoneProfitForm, id = id)
+    obj.send_status = 4
+    obj.save()
+
+    return HttpResponseRedirect(reverse("education:admin_forms_list"))
