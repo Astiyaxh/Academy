@@ -1,7 +1,7 @@
-from email.policy import default
-from random import choices
 from django.db import models
 from user.models import User
+from APA_module import apa_datetime
+import datetime
 
 Active   = 1
 Deactive = -1
@@ -268,3 +268,36 @@ class NoneProfitFormTable(models.Model):
 
     def __str__(self):
         return str(self.id)
+
+
+class rejected_english_institute_form_list(models.Model):
+    """
+    رد کردن فرم زبان خارجه
+    """
+    class Meta:
+        verbose_name        = 'رد کردن فرم زبان خارجه'
+        verbose_name_plural = 'رد کردن فرم زبان خارجه'
+
+    english_institute_id         = models.ForeignKey(EnglishInstituteRegister, on_delete=models.CASCADE)
+    user_id                      = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
+    title                        = models.CharField(max_length=500)
+    reason                       = models.TextField(max_length=4000)
+    time                         = models.TimeField(auto_now_add=True)
+    status                       = models.IntegerField('وضعیت', default=1, choices=StatusChoices)
+    create_date                  = models.IntegerField('تاریخ ثبت', default=apa_datetime.get_persian_date_normalized())
+
+class rejected_nonprofit_institue_form_list(models.Model):
+    """
+    رد کردن فرم علمی آزاد
+    """
+    class Meta:
+        verbose_name        = 'رد کردن فرم علمی آزاد'
+        verbose_name_plural = 'رد کردن فرم علمی آزاد'
+
+    nonprofit_institue_id        = models.ForeignKey(NoneProfitForm, on_delete=models.CASCADE)
+    user_id                      = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
+    title                        = models.CharField(max_length=500)
+    reason                       = models.TextField(max_length=4000)
+    time                         = models.TimeField(auto_now_add=True)
+    status                       = models.IntegerField('وضعیت', default=1, choices=StatusChoices)
+    create_date                  = models.IntegerField('تاریخ ثبت', default=apa_datetime.get_persian_date_normalized())
