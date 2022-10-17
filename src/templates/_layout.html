@@ -1,4 +1,5 @@
 {% load static %}
+{% load comon_tags %}
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 
@@ -64,6 +65,7 @@
                     <li><a href="#">لیست</a></li>
                   </ul>
                 </li>
+                {% if request.user|has_group:"NonProfit" %}
                 <li>
                   <a><i class="fa fa-university"></i> مرکز آموزش علمی آزاد
                     <span class="fa fa-chevron-down"></span></a>
@@ -71,7 +73,10 @@
                       <li><a href="{% url 'education:none_profit_form_register' %}">ثبت</a></li>
                       <li><a href="{% url 'education:english_institute_forms_list' %}">لیست</a></li>
                   </ul>
-                </li>
+                </li>                  
+                {% endif %}
+                  
+                {% if request.user|has_group:"English" %}
                 <li>
                   <a><i class="fa fa-language"></i> مرکز آموزش زبان خارجی
                     <span class="fa fa-chevron-down"></span></a>
@@ -84,6 +89,9 @@
                     </li>
                   </ul>
                 </li>
+                {% endif %}
+
+                {% if request.user|has_group:"SuperVisor" %}
                 <li>
                   <a><i class="fa fa-bar-chart"></i> گزارش گیری
                     <span class="fa fa-chevron-down"></span></a>
@@ -100,6 +108,9 @@
                     </li>
                   </ul>
                 </li>
+                {% endif %}
+
+
               </ul>
             </div>
           </div>
