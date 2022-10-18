@@ -8,8 +8,8 @@ class EnglishInstituteRegisterForm(forms.ModelForm):
         exclude = ("status","send_status","type")
 
 
-class NoneProfitFormForm(forms.ModelForm):
+class NonprofitInstituteRegisterForm(forms.ModelForm):
     class Meta:
-        model = models.NoneProfitForm
+        model = models.NonprofitInstituteRegister
         fields = "__all__"
         exclude = ("status","send_status","type")

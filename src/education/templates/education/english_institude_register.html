@@ -15,6 +15,10 @@
         $("#id_name_founder").attr("placeholder", "نام و نام خانوادگی موسس");
         $("#id_name_manager").attr("placeholder", "نام و نام خانوادگی مدیر");
         $("#id_score").attr("placeholder", "امتیاز کیفیت بخشی");
+        $("#id_bin_number").attr("placeholder", "شماره حساب مرکز");
+        $("#id_bank").attr("placeholder", "نزد بانک");
+        $("#id_branch").attr("placeholder", "شعبه");
+        $("#id_english_institute").attr("placeholder", "آموزشگاه");
 
 
     </script>
@@ -74,23 +78,20 @@
                 </div>
 
                 <div class="col-md-4 col-sm-12 col-xs-12 form-group pull-right">
-                    <p class="control-label col-md-4 col-sm-12 col-xs-12 pull-right"> شماره حساب مرکز:</p>
                     {{ form.bin_number }}
                 </div>
 
                 <div class="col-md-4 col-sm-12 col-xs-12 form-group pull-right">
-                    <p class="control-label col-md-4 col-sm-12 col-xs-12 pull-right"> نزد بانک  :</p>
                     {{ form.bank }}
                 </div>
 
                 <div class="col-md-4 col-sm-12 col-xs-12 form-group pull-right">
-                    <p class="control-label col-md-4 col-sm-12 col-xs-12 pull-right"> شعبه :</p>
                     {{ form.branch }}
                 </div>
 
                 <div class="col-md-4 col-sm-12 col-xs-12 form-group pull-right">
                     <p class="control-label col-md-4 col-sm-12 col-xs-12 pull-right"> آموزشگاه :</p>
-                    {{ form.institue_english }}
+                    {{ form.english_institute }}
                 </div>
 
                 <div class="col-md-4 col-sm-12 col-xs-12 form-group pull-right">

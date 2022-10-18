@@ -148,12 +148,12 @@
                                     {% if english_institutes_register.type == 2  %}
                                         {% if english_institutes_register.send_status == 1 or english_institutes_register.send_status == 3 %}
                                         <a class="btn btn-primary" href="{% url 'education:send_nonprofit_institute_forms_list' id=english_institutes_register.id %}">ارسال</a>
-                                        <a class="btn btn-success" href="{% url 'education:none_profit_form_edit' id=english_institutes_register.id %}">ویرایش</a>
+                                        <a class="btn btn-success" href="{% url 'education:nonprofit_form_edit' id=english_institutes_register.id %}">ویرایش</a>
                                         <a class="btn btn-danger" href="{% url 'education:delete_nonprofit_institute_forms_list' id=english_institutes_register.id %}">حذف</a>
                                         {% endif %}                          
                                         
                                         {% if english_institutes_register.send_status == 2 %}
-                                        <a class="btn btn-success" href="{% url 'education:none_profit_form_edit' id=english_institutes_register.id %}">ویرایش</a>
+                                        <a class="btn btn-success" href="{% url 'education:nonprofit_form_edit' id=english_institutes_register.id %}">ویرایش</a>
                                         <a class="btn btn-danger" href="{% url 'education:delete_nonprofit_institute_forms_list' id=english_institutes_register.id %}">حذف</a>
                                         {% endif %}
 

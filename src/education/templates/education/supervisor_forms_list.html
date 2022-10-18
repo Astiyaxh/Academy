@@ -127,24 +127,24 @@
                                     <!--Institute-->
                                     {% if query_set.type == 1 %}
                                         {% if query_set.send_status == 2 %}
-                                        <a class="btn btn-success" href="{% url 'education:admin_accepted_forms_list' id=query_set.id %}">تایید</a>
-                                        <a class="btn btn-danger" href="{% url 'education:admin_rejected_forms_list' id=query_set.id %}">رد</a>
-                                        {% endif %}
-                                    {% endif %}
-
-                                    <!--English Institute-->
-                                    {% if query_set.type == 2 %}
-                                        {% if query_set.send_status == 2 %}
-                                        <a class="btn btn-success" href="{% url 'education:admin_nonprofit_institute_accepted_forms_list' id=query_set.id %}">تایید</a>
-                                        <a class="btn btn-danger" href="{% url 'education:admin_nonprofit_institute_rejected_forms_list' id=query_set.id %}">رد</a>
+                                        <a class="btn btn-success" href="{% url 'education:supervisor_accepted_forms_list' id=query_set.id %}">تایید</a>
+                                        <a class="btn btn-danger" href="{% url 'education:supervisor_rejected_forms_list' id=query_set.id %}">رد</a>
                                         {% endif %}
                                     {% endif %}
 
                                     <!--Nonprofit Institute-->
+                                    {% if query_set.type == 2 %}
+                                        {% if query_set.send_status == 2 %}
+                                        <a class="btn btn-success" href="{% url 'education:supervisor_nonprofit_institute_accepted_forms_list' id=query_set.id %}">تایید</a>
+                                        <a class="btn btn-danger" href="{% url 'education:supervisor_nonprofit_institute_rejected_forms_list' id=query_set.id %}">رد</a>
+                                        {% endif %}
+                                    {% endif %}
+
+                                    <!--English Institute-->
                                     {% if query_set.type == 3 %}
                                         {% if query_set.send_status == 2 %}
-                                        <a class="btn btn-success" href="{% url 'education:admin_accepted_forms_list' id=query_set.id %}">تایید</a>
-                                        <a class="btn btn-danger" href="{% url 'education:admin_rejected_forms_list' id=query_set.id %}">رد</a>
+                                        <a class="btn btn-success" href="{% url 'education:supervisor_rejected_english_institute_forms_list' id=query_set.id %}">تایید</a>
+                                        <a class="btn btn-danger" href="{% url 'education:supervisor_accepted_english_institute_forms_list' id=query_set.id %}">رد</a>
                                         {% endif %}
                                     {% endif %}
                                         
