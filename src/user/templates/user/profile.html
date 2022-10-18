@@ -22,82 +22,7 @@
     <script>
         $('input').addClass('form-control');
     </script>
-    <script>
-        $.fn.extend({
-            treed: function (o) {
 
-                var openedClass = 'glyphicon-minus-sign';
-                var closedClass = 'glyphicon-plus-sign';
-
-                if (typeof o != 'undefined') {
-                    if (typeof o.openedClass != 'undefined') {
-                        openedClass = o.openedClass;
-                    }
-                    if (typeof o.closedClass != 'undefined') {
-                        closedClass = o.closedClass;
-                    }
-                }
-                ;
-
-                //initialize each of the top levels
-                var tree = $(this);
-                tree.addClass("tree");
-                tree.find('li').has("ul").each(function () {
-                    var branch = $(this); //li with children ul
-                    branch.prepend("<i class='indicator glyphicon " + closedClass + "'></i>");
-                    branch.addClass('branch');
-                    branch.on('click', function (e) {
-                        if (this == e.target) {
-                            var icon = $(this).children('i:first');
-                            icon.toggleClass(openedClass + " " + closedClass);
-                            $(this).children().children().toggle();
-                        }
-                    })
-                    branch.children().children().toggle();
-                });
-                //fire event from the dynamically added icon
-                tree.find('.branch .indicator').each(function () {
-                    $(this).on('click', function () {
-                        $(this).closest('li').click();
-                    });
-                });
-                //fire event to open branch if the li contains an anchor instead of text
-                tree.find('.branch>a').each(function () {
-                    $(this).on('click', function (e) {
-                        $(this).closest('li').click();
-                        e.preventDefault();
-                    });
-                });
-                //fire event to open branch if the li contains a button instead of text
-                tree.find('.branch>button').each(function () {
-                    $(this).on('click', function (e) {
-                        $(this).closest('li').click();
-                        e.preventDefault();
-                    });
-                });
-            }
-        });
-
-        //Initialization of treeviews
-
-        $('#tree1').treed();
-
-        function setChartId(id, name, type) {
-            console.log(type)
-            switch (type) {
-                case '1':
-                   console.log(1)
-                    break;
-                case '2':
-                    console.log(2)
-                    break;
-                case '3':
-                    addTeam(id,name)
-                    break;
-            }
-
-        }
-    </script>
 
     <script>
         $("#id_birthday_age").addClass('hidden');
@@ -111,11 +36,6 @@
         
     </script>
 
-    <!-- <script>
-        function datepicker1Change() {
-            document.getElementById("id_birthday_age").value = fixNumbers($('#fromDate1').val().replace("/", "").replace("/", ""));
-        }
-    </script> -->
 <script>
 $('#id_last_name').keypress(function (e) {
         var regex = new RegExp(/^[\u0600-\u06FF\s]+$/);
@@ -144,12 +64,6 @@ $('#id_last_name').keypress(function (e) {
     });
     </script>
 {% if successfullsave %}
-<!-- <script>
-    //  document.onload = function(){alert("داده ها با موفقیت ذخیره شدند")}
-    //  $(window).on('load', function() {
-    //     alert("داده ها با موفقیت ذخیره شدند")
-    // });
-</script> -->
 <script>
 $('#myModal').modal('show');
 </script>
@@ -339,7 +253,6 @@ $('#myModal').modal('show');
             <div class="x_content">
                 <ul class="nav nav-tabs">
                     <li class="active" ><a id="organPorposTab" data-toggle="tab" href="#organPorpos"> اطلاعات پایه</a></li>
-                    <li><a data-toggle="tab" id="organChartTab" href="#editorganchart">ویرایش اطلاعات حرفه ای</a></li>
                   </ul>
                   <form action="" method="post" enctype="multipart/form-data" style="background-color: white" novalidate>
                     {% csrf_token %}
@@ -359,14 +272,7 @@ $('#myModal').modal('show');
                         <label class="control-label col-md-12 col-sm-12 col-xs-12 pull-right">نام کاربری :</label>
                         {{user.username}}
                     </div>
-                    <!-- <script>
-                        $(function () {
-            
-                            $('#datepicker0').datepicker();
-                            $('#datepicker1').datepicker();
-                            $('#datepicker2').datepicker();
-                        });
-                    </script> -->
+
                     <div class="col-md-6 col-sm-12 col-xs-12 form-group pull-right">
                         <label class="control-label col-md-5 col-sm-3 col-xs-12 pull-right">کد ملی :</label>
                         {{user.national_code}}
@@ -403,46 +309,6 @@ $('#myModal').modal('show');
                     </div>
                     <div class="clearfix"></div>
                   </div>
-                    <div id="editorganchart" class="tab-pane fade">
-                        <script>
-                            var tableIndex2 = 0;
-                            function add_pro_degree() {
-                                if(document.getElementById("degree_title").value.length == 0)
-                                    {
-                                        alert("عنوان نمیتواند خالی باشد")
-                                    }
-                                let val2 = $('#degree_title').val();
-                                console.log(val2)
-                                let text2 = $('#degree_title').val();
-                                var x2 = document.getElementById("tblFile").rows.namedItem(val2);
-                                console.log(x2);
-                                if (x2 == null && text2.trim() !='') {
-                                    var table2 = document.getElementById("tblFile");
-                                    var row2 = table2.insertRow(tableIndex2);
-                                    row2.id = val2;
-                                    var cell11 = row2.insertCell(0);
-                                    var cell22 = row2.insertCell(1);
-                                    var cell33 = row2.insertCell(2);
-                                    cell11.innerHTML = text2 + "<input name='degree_title' value='" + val2.trim() + "' class='hidden'>";
-                                    cell22.innerHTML="<input name='degree_files' required type='file' class=''>"
-                                    cell33.innerHTML = "<span class='glyphicon glyphicon-trash row-remover2 btn btn-danger '></span>";
-                                    tableIndex2++;
-                                }
-                                $('#degree_title').val('')
-                            }
-                            $("body").on('click', '.row-remover2', function() {
-                                $(this).closest('tr').remove();
-                                tableIndex2--;
-                            });
-                        </script>
-                        <!-- MODAL 1 -->
-                        <a type="button" style="border: solid black 1px;" class="btn btn-light" data-toggle="modal" data-target="#degree">
-                            <img src="static/assets/images/document-file-svgrepo-com.svg" style="width:50px;height:50px;" alt="">
-                            اطلاعات حرفه ای
-                        </a>
-  </div>
-
-
                     <div class="col-md-3 col-sm-4 col-xs-4 form-group pull-right">
                         <button type="submit" class="btn btn-success">ذخیره</button>
                     </div>
@@ -464,319 +330,20 @@ $('#myModal').modal('show');
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
         <div class="modal-body">
-          ...
+            تغییرات شما با موفقیت ثبت شد
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Save changes</button>
+            <button type="button" class="btn btn-danger" data-dismiss="modal">بستن پنجره</button>
         </div>
       </div>
     </div>
   </div>
 
-<script>
-    $.fn.fileUploader = function (filesToUpload) {
-this.closest(".files").change(function (evt) {
-
-  for (var i = 0; i < evt.target.files.length; i++) {
-      filesToUpload.push(evt.target.files[i]);
-  };
-  var output = [];
-
-  for (var i = 0, f; f = evt.target.files[i]; i++) {
-      var removeLink = "<a class=\"removeFile\" href=\"#\" data-fileid=\"" + i + "\"> حذف این فایل</a>";
-
-      output.push("<li><strong>", escape(f.name), "</strong> - ",
-          f.size, " bytes. &nbsp; &nbsp; ", removeLink, "</li> ");
-  }
-
-  $(this).children(".fileList")
-      .append(output.join(""));
-});
-};
-
-var filesToUpload = [];
-$(document).on("click",".removeFile", function(e){
-e.preventDefault();
-var fileName = $(this).parent().children("strong").text();
-for(i = 0; i < filesToUpload.length; ++ i){
-  if(filesToUpload[i].name == fileName){
-      filesToUpload.splice(i, 1);
-  }	
-}
-$(this).parent().remove();
-});
-$("#books_file").fileUploader(filesToUpload);
-$("#uploadBtn").click(function (e) {
-  e.preventDefault();
-});
-</script>
-<script>
-    $.fn.fileUploader = function (filesToUpload) {
-this.closest(".files").change(function (evt) {
-
-  for (var i = 0; i < evt.target.files.length; i++) {
-      filesToUpload.push(evt.target.files[i]);
-  };
-  var output = [];
-
-  for (var i = 0, f; f = evt.target.files[i]; i++) {
-      var removeLink = "<a class=\"removeFile\" href=\"#\" data-fileid=\"" + i + "\"> حذف این فایل</a>";
-
-      output.push("<li><strong>", escape(f.name), "</strong> - ",
-          f.size, " bytes. &nbsp; &nbsp; ", removeLink, "</li> ");
-  }
-
-  $(this).children(".fileList")
-      .append(output.join(""));
-});
-};
-
-var filesToUpload = [];
-$(document).on("click",".removeFile", function(e){
-e.preventDefault();
-var fileName = $(this).parent().children("strong").text();
-for(i = 0; i < filesToUpload.length; ++ i){
-  if(filesToUpload[i].name == fileName){
-      filesToUpload.splice(i, 1);
-  }	
-}
-$(this).parent().remove();
-});
-$("#inventions_file").fileUploader(filesToUpload);
-$("#uploadBtn").click(function (e) {
-  e.preventDefault();
-});
-</script>
-  <script>
-    $.fn.fileUploader = function (filesToUpload) {
-this.closest(".files").change(function (evt) {
-
-  for (var i = 0; i < evt.target.files.length; i++) {
-      filesToUpload.push(evt.target.files[i]);
-  };
-  var output = [];
-
-  for (var i = 0, f; f = evt.target.files[i]; i++) {
-      var removeLink = "<a class=\"removeFile\" href=\"#\" data-fileid=\"" + i + "\"> حذف این فایل</a>";
-
-      output.push("<li><strong>", escape(f.name), "</strong> - ",
-          f.size, " bytes. &nbsp; &nbsp; ", removeLink, "</li> ");
-  }
-
-  $(this).children(".fileList")
-      .append(output.join(""));
-});
-};
-
-var filesToUpload = [];
-$(document).on("click",".removeFile", function(e){
-e.preventDefault();
-var fileName = $(this).parent().children("strong").text();
-for(i = 0; i < filesToUpload.length; ++ i){
-  if(filesToUpload[i].name == fileName){
-      filesToUpload.splice(i, 1);
-  }	
-}
-$(this).parent().remove();
-});
-$("#articles_file").fileUploader(filesToUpload);
-$("#uploadBtn").click(function (e) {
-  e.preventDefault();
-});
-</script>
-
-  <script>
-    $.fn.fileUploader = function (filesToUpload) {
-this.closest(".files").change(function (evt) {
-
-  for (var i = 0; i < evt.target.files.length; i++) {
-      filesToUpload.push(evt.target.files[i]);
-  };
-  var output = [];
-
-  for (var i = 0, f; f = evt.target.files[i]; i++) {
-      var removeLink = "<a class=\"removeFile\" href=\"#\" data-fileid=\"" + i + "\"> حذف این فایل</a>";
-
-      output.push("<li><strong>", escape(f.name), "</strong> - ",
-          f.size, " bytes. &nbsp; &nbsp; ", removeLink, "</li> ");
-  }
-
-  $(this).children(".fileList")
-      .append(output.join(""));
-});
-};
-
-var filesToUpload = [];
-$(document).on("click",".removeFile", function(e){
-e.preventDefault();
-var fileName = $(this).parent().children("strong").text();
-for(i = 0; i < filesToUpload.length; ++ i){
-  if(filesToUpload[i].name == fileName){
-      filesToUpload.splice(i, 1);
-  }	
-}
-$(this).parent().remove();
-});
-$("#file_edu_records").fileUploader(filesToUpload);
-$("#uploadBtn").click(function (e) {
-  e.preventDefault();
-});
-</script>
-  <script>
-    $.fn.fileUploader = function (filesToUpload) {
-this.closest(".files").change(function (evt) {
-
-  for (var i = 0; i < evt.target.files.length; i++) {
-      filesToUpload.push(evt.target.files[i]);
-  };
-  var output = [];
-
-  for (var i = 0, f; f = evt.target.files[i]; i++) {
-      var removeLink = "<a class=\"removeFile\" href=\"#\" data-fileid=\"" + i + "\"> حذف این فایل</a>";
-
-      output.push("<li><strong>", escape(f.name), "</strong> - ",
-          f.size, " bytes. &nbsp; &nbsp; ", removeLink, "</li> ");
-  }
-
-  $(this).children(".fileList")
-      .append(output.join(""));
-});
-};
-
-var filesToUpload = [];
-$(document).on("click",".removeFile", function(e){
-e.preventDefault();
-var fileName = $(this).parent().children("strong").text();
-for(i = 0; i < filesToUpload.length; ++ i){
-  if(filesToUpload[i].name == fileName){
-      filesToUpload.splice(i, 1);
-  }	
-}
-$(this).parent().remove();
-});
-$("#skills_file").fileUploader(filesToUpload);
-$("#uploadBtn").click(function (e) {
-  e.preventDefault();
-});
-</script>
-      <script>
-          $.fn.fileUploader = function (filesToUpload) {
-    this.closest(".files").change(function (evt) {
-
-        for (var i = 0; i < evt.target.files.length; i++) {
-            filesToUpload.push(evt.target.files[i]);
-        };
-        var output = [];
-
-        for (var i = 0, f; f = evt.target.files[i]; i++) {
-            var removeLink = "<a class=\"removeFile\" href=\"#\" data-fileid=\"" + i + "\"> حذف این فایل</a>";
-
-            output.push("<li><strong>", escape(f.name), "</strong> - ",
-                f.size, " bytes. &nbsp; &nbsp; ", removeLink, "</li> ");
-        }
-
-        $(this).children(".fileList")
-            .append(output.join(""));
-    });
-};
-
-var filesToUpload = [];
-$(document).on("click",".removeFile", function(e){
-    e.preventDefault();
-    var fileName = $(this).parent().children("strong").text();
-    for(i = 0; i < filesToUpload.length; ++ i){
-        if(filesToUpload[i].name == fileName){
-            filesToUpload.splice(i, 1);
-        }	
-	}
-    $(this).parent().remove();
-});
-    $("#passed_trials_file").fileUploader(filesToUpload);
-    $("#uploadBtn").click(function (e) {
-        e.preventDefault();
-    });
-      </script>
-            <script>
-                $.fn.fileUploader = function (filesToUpload) {
-          this.closest(".files").change(function (evt) {
-      
-              for (var i = 0; i < evt.target.files.length; i++) {
-                  filesToUpload.push(evt.target.files[i]);
-              };
-              var output = [];
-      
-              for (var i = 0, f; f = evt.target.files[i]; i++) {
-                  var removeLink = "<a class=\"removeFile\" href=\"#\" data-fileid=\"" + i + "\"> حذف این فایل</a>";
-      
-                  output.push("<li><strong>", escape(f.name), "</strong> - ",
-                      f.size, " bytes. &nbsp; &nbsp; ", removeLink, "</li> ");
-              }
-      
-              $(this).children(".fileList")
-                  .append(output.join(""));
-          });
-      };
-      
-      var filesToUpload = [];
-      $(document).on("click",".removeFile", function(e){
-          e.preventDefault();
-          var fileName = $(this).parent().children("strong").text();
-          for(i = 0; i < filesToUpload.length; ++ i){
-              if(filesToUpload[i].name == fileName){
-                  filesToUpload.splice(i, 1);
-              }	
-          }
-          $(this).parent().remove();
-      });
-          $("#job_record_file").fileUploader(filesToUpload);
-          $("#uploadBtn").click(function (e) {
-              e.preventDefault();
-          });
-            </script>
-            <script>
-                $.fn.fileUploader = function (filesToUpload) {
-            this.closest(".files").change(function (evt) {
-            
-              for (var i = 0; i < evt.target.files.length; i++) {
-                  filesToUpload.push(evt.target.files[i]);
-              };
-              var output = [];
-            
-              for (var i = 0, f; f = evt.target.files[i]; i++) {
-                  var removeLink = "<a class=\"removeFile\" href=\"#\" data-fileid=\"" + i + "\"> حذف این فایل</a>";
-            
-                  output.push("<li><strong>", escape(f.name), "</strong> - ",
-                      f.size, " bytes. &nbsp; &nbsp; ", removeLink, "</li> ");
-              }
-            
-              $(this).children(".fileList")
-                  .append(output.join(""));
-            });
-            };
-            
-            var filesToUpload = [];
-            $(document).on("click",".removeFile", function(e){
-            e.preventDefault();
-            var fileName = $(this).parent().children("strong").text();
-            for(i = 0; i < filesToUpload.length; ++ i){
-              if(filesToUpload[i].name == fileName){
-                  filesToUpload.splice(i, 1);
-              }	
-            }
-            $(this).parent().remove();
-            });
-            $("#degree_file").fileUploader(filesToUpload);
-            $("#uploadBtn").click(function (e) {
-              e.preventDefault();
-            });
-            </script>
     </div>
 </div>
 

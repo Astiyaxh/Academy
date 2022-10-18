@@ -33,11 +33,6 @@ AUTH_USER_MODEL = "user.User"
 # Application definition
 
 INSTALLED_APPS = [
-    # project apps
-    'user',
-    'education',
-    'report',
-
     # django apps
     'django.contrib.admin',
     'django.contrib.auth',
@@ -45,6 +40,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # project apps
+    'user',
+    'education',
+    'report',
 ]
 
 MIDDLEWARE = [
@@ -113,7 +112,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'fa-ir'
 
-TIME_ZONE = 'ASIA/TEHRAN'
+TIME_ZONE = 'asia/tehran'
 
 USE_I18N = True
 
