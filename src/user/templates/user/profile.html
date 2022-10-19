@@ -35,6 +35,12 @@
         document.getElementById("fromDate1").value=normalizeDate(document.getElementById("id_birthday_age").value)
         
     </script>
+    <script>
+        $(window).load(function(){
+            var element = document.getElementById("profile_picture-clear_id");
+            element.classList.remove("form-control");
+        })
+    </script>
 
 <script>
 $('#id_last_name').keypress(function (e) {
@@ -183,6 +189,9 @@ $('#myModal').modal('show');
 
 {% block pageContent %}
 <style>
+    .modal-body{
+                font-size: 17px;
+            }
     input[type="file"] {
   display: block;
 }
@@ -317,7 +326,7 @@ $('#myModal').modal('show');
 
             </div>
             </form>
-            {% for field in members_form %}
+            {% for field in user %}
             {% if field.errors %}
                 <div class="alert alert-danger">
                     {{ field.label_tag }} {{ field.errors }}
