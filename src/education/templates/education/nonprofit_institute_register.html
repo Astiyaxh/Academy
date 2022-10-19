@@ -12,9 +12,9 @@
         $('input[type=email]').addClass('form-control');
         $('select').addClass('form-control');
         $(document).ready(function () { $('select').select2();});
-        $("#id_name_founder").attr("placeholder", "نام و نام خانوادگی موسس");
-        $("#id_name_manager").attr("placeholder", "نام و نام خانوادگی مدیر");
-        $("#id_score").attr("placeholder", "امتیاز کیفیت بخشی");
+        // $("#id_name_founder").attr("placeholder", "نام و نام خانوادگی موسس");
+        // $("#id_name_manager").attr("placeholder", "نام و نام خانوادگی مدیر");
+        // $("#id_score").attr("placeholder", "امتیاز کیفیت بخشی");
 
 
     </script>
@@ -62,14 +62,17 @@
                 <input class="hidden" name="user" value="{{ request.user.id }}" type="number">
 
                 <div class="col-md-4 col-sm-12 col-xs-12 form-group pull-right">
+                    <p class="control-label col-md-4 col-sm-12 col-xs-12 pull-right"> نام و نام خانوادگی موسس :</p>
                     {{ form.name_founder }}
                 </div>
                 
                 <div class="col-md-4 col-sm-12 col-xs-12 form-group pull-right">
+                    <p class="control-label col-md-4 col-sm-12 col-xs-12 pull-right"> نام و نام خانوادگی مدیر :</p>
                     {{ form.name_manager }}
                 </div>
 
                 <div class="col-md-4 col-sm-12 col-xs-12 form-group pull-right">
+                    <p class="control-label col-md-4 col-sm-12 col-xs-12 pull-right"> امتیاز کیفیت بخشی :</p>
                     {{ form.score }}
                 </div>
 
