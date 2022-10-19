@@ -11,18 +11,19 @@ urlpatterns = [
     path('send_english_institute_forms_list/<int:id>', views.send_english_institute_forms_list, name='send_english_institute_forms_list'),
 
     # None Profit institute urls 
-    path('none_profit_form_register/', views.none_profit_form_register, name='none_profit_form_register'),
-    path('delete_nonprofit_institute_forms_list/<int:id>', views.delete_nonprofit_institute_forms_list, name='delete_nonprofit_institute_forms_list'),
+    path('nonprofit_form_register/', views.nonprofit_form_register, name='nonprofit_form_register'),
+    path('nonprofit_form_edit/<int:id>', views.nonprofit_form_edit, name='nonprofit_form_edit'),
     path('send_nonprofit_institute_forms_list/<int:id>', views.send_nonprofit_institute_forms_list, name='send_nonprofit_institute_forms_list'),
-    path('none_profit_form_edit/<int:id>', views.none_profit_form_edit, name='none_profit_form_edit'),
+    path('delete_nonprofit_institute_forms_list/<int:id>', views.delete_nonprofit_institute_forms_list, name='delete_nonprofit_institute_forms_list'),
 
+    # Supervisor form list Urls
+    path('supervisor_forms_list/', views.supervisor_forms_list, name='supervisor_forms_list'),
 
-    # Admin English Institute Urls
-    path('admin_forms_list/', views.admin_forms_list, name='admin_forms_list'),
-    path('admin_rejected_forms_list/<int:id>', views.admin_rejected_forms_list, name='admin_rejected_forms_list'),
-    path('admin_accepted_forms_list/<int:id>', views.admin_accepted_forms_list, name='admin_accepted_forms_list'),
+    # Supervisor English Institute Urls
+    path('supervisor_rejected_english_institute_forms_list/<int:id>', views.supervisor_rejected_english_institute_forms_list, name='supervisor_rejected_english_institute_forms_list'),
+    path('supervisor_accepted_english_institute_forms_list/<int:id>', views.supervisor_accepted_english_institute_forms_list, name='supervisor_accepted_english_institute_forms_list'),
 
-    # Admin Profit Institute Urls
-    path('admin_nonprofit_institute_rejected_forms_list/<int:id>', views.admin_nonprofit_institute_rejected_forms_list, name='admin_nonprofit_institute_rejected_forms_list'),
-    path('admin_nonprofit_institute_accepted_forms_list/<int:id>', views.admin_nonprofit_institute_accepted_forms_list, name='admin_nonprofit_institute_accepted_forms_list'),
+    # Supervisor Profit Institute Urls
+    path('supervisor_nonprofit_institute_rejected_forms_list/<int:id>', views.supervisor_nonprofit_institute_rejected_forms_list, name='supervisor_nonprofit_institute_rejected_forms_list'),
+    path('supervisor_nonprofit_institute_accepted_forms_list/<int:id>', views.supervisor_nonprofit_institute_accepted_forms_list, name='supervisor_nonprofit_institute_accepted_forms_list'),
 ]

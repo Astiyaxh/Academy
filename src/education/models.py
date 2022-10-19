@@ -50,7 +50,7 @@ class City(models.Model):
     """
     class Meta:
         verbose_name        = 'شهر'
-        verbose_name_plural = 'شهر'
+        verbose_name_plural = 'A- شهر'
 
     name    = models.CharField('نام', max_length=255, unique=True, )
     status  = models.IntegerField('وضعیت', default=1, choices=StatusChoices)
@@ -63,7 +63,7 @@ class District(models.Model):
     """
     class Meta:
         verbose_name        = 'منطقه'
-        verbose_name_plural = 'منطقه'
+        verbose_name_plural = 'B- منطقه'
 
     name    = models.CharField('نام', max_length=255, unique=True, )
     status  = models.IntegerField('وضعیت', default=1, choices=StatusChoices)
@@ -76,7 +76,37 @@ class Area(models.Model):
     """
     class Meta:
         verbose_name        = 'ناحیه'
-        verbose_name_plural = 'ناحیه'
+        verbose_name_plural = 'C- ناحیه'
+
+    name    = models.CharField('نام', max_length=255, unique=True, )
+    status  = models.IntegerField('وضعیت', default=1, choices=StatusChoices)
+
+    def __str__(self):
+        return str(self.name)
+
+
+class StudyPeriod(models.Model):
+    """
+    دوره تحصیلی
+    """
+    class Meta:
+        verbose_name        = 'دوره تحصیلی'
+        verbose_name_plural = 'D- دوره تحصیلی'
+
+    name    = models.CharField('نام', max_length=255, unique=True, )
+    status  = models.IntegerField('وضعیت', default=1, choices=StatusChoices)
+
+    def __str__(self):
+        return str(self.name)
+
+
+class InstitueActivityType(models.Model):
+    """
+    نوع فعالیت موسسه
+    """
+    class Meta:
+        verbose_name        = 'نوع فعالیت موسسه'
+        verbose_name_plural = 'E- نوع فعالیت موسسه'
 
     name    = models.CharField('نام', max_length=255, unique=True, )
     status  = models.IntegerField('وضعیت', default=1, choices=StatusChoices)
@@ -91,7 +121,7 @@ class EnglishInstitute(models.Model):
     """
     class Meta:
         verbose_name        = 'مرکز آموزش زبان خارجه'
-        verbose_name_plural = 'مرکز آموزش زبان خارجه'
+        verbose_name_plural = 'F- مرکز آموزش زبان خارجه'
 
     name    = models.CharField('نام', max_length=255, unique=True, )
     status  = models.IntegerField('وضعیت', default=1, choices=StatusChoices)
@@ -99,70 +129,14 @@ class EnglishInstitute(models.Model):
     def __str__(self):
         return str(self.name)
 
-
-class NonProfitInstitue(models.Model):
-    """
-    مرکز آموزشی علمی آزاد
-    """
-    class Meta:
-        verbose_name        = 'مرکز آموزشی علمی آزاد'
-        verbose_name_plural = 'مرکز آموزشی علمی آزاد'
-
-    name    = models.CharField('نام', max_length=255, unique=True, )
-    status  = models.IntegerField('وضعیت', default=1, choices=StatusChoices)
-
-    def __str__(self):
-        return str(self.name)
-
-class InstitueActivityType(models.Model):
-    """
-    نوع فعالیت موسسه
-    """
-    class Meta:
-        verbose_name        = 'نوع فعالیت موسسه'
-        verbose_name_plural = 'نوع فعالیت موسسه'
-
-    name    = models.CharField('نام', max_length=255, unique=True, )
-    status  = models.IntegerField('وضعیت', default=1, choices=StatusChoices)
-
-    def __str__(self):
-        return str(self.name)
-
-class StudyPeriod(models.Model):
-    """
-    دوره تحصیلی
-    """
-    class Meta:
-        verbose_name        = 'دوره تحصیلی'
-        verbose_name_plural = 'دوره تحصیلی'
-
-    name    = models.CharField('نام', max_length=255, unique=True, )
-    status  = models.IntegerField('وضعیت', default=1, choices=StatusChoices)
-
-    def __str__(self):
-        return str(self.name)
 
 class EnglishInstituteDefineTerm(models.Model):
     """
-    تعریف سطح دوره مرکز آموزش زبان خارجی
+    تعریف سطح دوره زبان خارجه
     """
     class Meta:
-        verbose_name        = 'تعریف سطح دوره مرکز آموزش زبان خارجی'
-        verbose_name_plural = 'تعریف سطح دوره مرکز آموزش زبان خارجی'
-
-    name    = models.CharField('نام', max_length=255, unique=True, )
-    status  = models.IntegerField('وضعیت', default=1, choices=StatusChoices)
-
-    def __str__(self):
-        return str(self.name)
-
-class NonProfitInstituteDefineTerm(models.Model):
-    """
-    تعریف سطح دوره مرکز آموزش علمی آزاد
-    """
-    class Meta:
-        verbose_name        = 'تعریف سطح دوره مرکز آموزش علمی آزاد'
-        verbose_name_plural = 'تعریف سطح دوره مرکز آموزش علمی آزاد'
+        verbose_name        = 'تعریف سطح دوره زبان خارجه'
+        verbose_name_plural = 'G- تعریف سطح دوره زبان خارجه'
 
     name    = models.CharField('نام', max_length=255, unique=True, )
     status  = models.IntegerField('وضعیت', default=1, choices=StatusChoices)
@@ -173,14 +147,14 @@ class NonProfitInstituteDefineTerm(models.Model):
 
 class EnglishInstituteRegister(models.Model):
     """
-    ثبت نام مرکز آموزش زبان خارجه
+    فرم ثبت زبان خارجه
     """
     class Meta:
-        verbose_name        = 'ثبت نام مرکز آموزش زبان خارجه'
-        verbose_name_plural = 'ثبت نام مرکز آموزش زبان خارجه'
+        verbose_name        = 'فرم ثبت زبان خارجه'
+        verbose_name_plural = 'H- فرم ثبت زبان خارجه'
 
     user                    = models.ForeignKey(User, on_delete=models.PROTECT)
-    institue_english        = models.ForeignKey("EnglishInstitute", on_delete=models.PROTECT)
+    english_institute       = models.ForeignKey("EnglishInstitute", on_delete=models.PROTECT)
     city                    = models.ForeignKey("City", on_delete=models.PROTECT)
     district                = models.ForeignKey("District", on_delete=models.PROTECT)
     area                    = models.ForeignKey("Area", on_delete=models.PROTECT)
@@ -199,13 +173,14 @@ class EnglishInstituteRegister(models.Model):
     def __str__(self):
         return str(self.id)
 
+
 class EnglishInstituteForm(models.Model):
     """
     فرم آموزش زبان خارجه
     """
     class Meta:
         verbose_name        = 'فرم آموزش زبان خارجه'
-        verbose_name_plural = 'فرم آموزش زبان خارجه'
+        verbose_name_plural = 'I- فرم آموزش زبان خارجه'
 
     english_institute_define_term       = models.ForeignKey("EnglishInstituteDefineTerm", on_delete=models.PROTECT)
     english_institute_register          = models.ForeignKey("EnglishInstituteRegister", on_delete=models.CASCADE)
@@ -219,17 +194,47 @@ class EnglishInstituteForm(models.Model):
         return str(self.id)
 
 
-class NoneProfitForm(models.Model):
+class NonprofitInstitue(models.Model):
     """
-    فرم ثبت مرکز آموزشی علمی آزاد
+    مرکز آموزشی علمی آزاد
     """
     class Meta:
-        verbose_name        = 'فرم ثبت مرکز آموزشی علمی آزاد'
-        verbose_name_plural = 'فرم ثبت مرکز آموزشی علمی آزاد'
+        verbose_name        = 'مرکز آموزشی علمی آزاد'
+        verbose_name_plural = 'J- مرکز آموزشی علمی آزاد'
+
+    name    = models.CharField('نام', max_length=255, unique=True, )
+    status  = models.IntegerField('وضعیت', default=1, choices=StatusChoices)
+
+    def __str__(self):
+        return str(self.name)
+
+
+class NonprofitInstituteDefineTerm(models.Model):
+    """
+    تعریف سطح دوره علمی آزاد
+    """
+    class Meta:
+        verbose_name        = 'تعریف سطح دوره علمی آزاد'
+        verbose_name_plural = 'K- تعریف سطح دوره علمی آزاد'
+
+    name    = models.CharField('نام', max_length=255, unique=True, )
+    status  = models.IntegerField('وضعیت', default=1, choices=StatusChoices)
+
+    def __str__(self):
+        return str(self.name)
+
+
+class NonprofitInstituteRegister(models.Model):
+    """
+    فرم ثبت مرکز علمی آزاد
+    """
+    class Meta:
+        verbose_name        = 'فرم ثبت علمی آزاد'
+        verbose_name_plural = 'L- فرم ثبت علمی آزاد'
 
 
     user                    = models.ForeignKey(User, on_delete=models.PROTECT)
-    non_proft_institute     = models.ForeignKey("NonProfitInstitue", on_delete=models.PROTECT)
+    nonproft_institute      = models.ForeignKey("NonprofitInstitue", on_delete=models.PROTECT)
     city                    = models.ForeignKey("City", on_delete=models.PROTECT)
     district                = models.ForeignKey("District", on_delete=models.PROTECT)
     area                    = models.ForeignKey("Area", on_delete=models.PROTECT)
@@ -250,16 +255,16 @@ class NoneProfitForm(models.Model):
 
 
 
-class NoneProfitFormTable(models.Model):
+class NonprofitInstituteForm(models.Model):
     """
-    جدول ثبت مرکز علمی آزاد
+    فرم آموزش مرکز علمی آزاد
     """
     class Meta:
-        verbose_name        = 'جدول ثبت مرکز علمی آزاد'
-        verbose_name_plural = 'جدول ثبت مرکز علمی آزاد'
+        verbose_name        = 'فرم آموزش علمی آزاد'
+        verbose_name_plural = 'M- فرم آموزش علمی آزاد'
 
-    non_profit_institute_define_term        = models.ForeignKey("NonProfitInstituteDefineTerm", on_delete=models.PROTECT)
-    none_profit_form                        = models.ForeignKey("NoneProfitForm", on_delete=models.CASCADE)
+    nonprofit_institute_define_term         = models.ForeignKey("NonprofitInstituteDefineTerm", on_delete=models.PROTECT)
+    nonprofit_institute_register            = models.ForeignKey("NonprofitInstituteRegister", on_delete=models.CASCADE)
     education_content                       = models.CharField('محتوا آموزشی', max_length=255)
     session_number                          = models.IntegerField('تعداد جلسات',)
     max_student                             = models.IntegerField('حداکثر تعداد دانش آموز',)
@@ -270,13 +275,13 @@ class NoneProfitFormTable(models.Model):
         return str(self.id)
 
 
-class rejected_english_institute_form_list(models.Model):
+class RejectedEnglishInstituteFormList(models.Model):
     """
     رد کردن فرم زبان خارجه
     """
     class Meta:
         verbose_name        = 'رد کردن فرم زبان خارجه'
-        verbose_name_plural = 'رد کردن فرم زبان خارجه'
+        verbose_name_plural = 'N- رد کردن فرم زبان خارجه'
 
     english_institute_id         = models.ForeignKey(EnglishInstituteRegister, on_delete=models.CASCADE)
     user_id                      = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
@@ -286,15 +291,15 @@ class rejected_english_institute_form_list(models.Model):
     status                       = models.IntegerField('وضعیت', default=1, choices=StatusChoices)
     create_date                  = models.IntegerField('تاریخ ثبت', default=apa_datetime.get_persian_date_normalized())
 
-class rejected_nonprofit_institue_form_list(models.Model):
+class RejectedNonprofitInstitueFormList(models.Model):
     """
     رد کردن فرم علمی آزاد
     """
     class Meta:
         verbose_name        = 'رد کردن فرم علمی آزاد'
-        verbose_name_plural = 'رد کردن فرم علمی آزاد'
+        verbose_name_plural = 'O- رد کردن فرم علمی آزاد'
 
-    nonprofit_institue_id        = models.ForeignKey(NoneProfitForm, on_delete=models.CASCADE)
+    nonprofit_institue_id        = models.ForeignKey(NonprofitInstituteRegister, on_delete=models.CASCADE)
     user_id                      = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
     title                        = models.CharField(max_length=500)
     reason                       = models.TextField(max_length=4000)

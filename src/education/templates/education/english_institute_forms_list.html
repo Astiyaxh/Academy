@@ -1,0 +1,255 @@
+{% extends '_layout.html' %}
+{% load static %}
+
+{% block jsBlock %}
+    <!-- Datatables -->
+    <script src="{% static 'assets/vendors/datatables.net/js/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static 'assets/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js' %}"></script>
+    <script src="{% static 'assets/vendors/datatables.net-buttons/js/dataTables.buttons.min.js' %}"></script>
+    <script src="{% static 'assets/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js' %}"></script>
+    <script src="{% static 'assets/vendors/datatables.net-buttons/js/buttons.flash.min.js' %}"></script>
+    <script src="{% static 'assets/vendors/datatables.net-buttons/js/buttons.html5.min.js' %}"></script>
+    <script src="{% static 'assets/vendors/datatables.net-buttons/js/buttons.print.min.js' %}"></script>
+    <script src="{% static 'assets/vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js' %}"></script>
+    <script src="{% static 'assets/vendors/datatables.net-keytable/js/dataTables.keyTable.min.js' %}"></script>
+    <script src="{% static 'assets/vendors/datatables.net-responsive/js/dataTables.responsive.min.js' %}"></script>
+    <script src="{% static 'assets/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js' %}"></script>
+    <script src="{% static 'assets/vendors/datatables.net-scroller/js/dataTables.scroller.min.js' %}"></script>
+    <script src="{% static 'assets/vendors/jszip/dist/jszip.min.js' %}"></script>
+    <script src="{% static 'assets/vendors/pdfmake/build/pdfmake.min.js' %}"></script>
+    <script src="{% static 'assets/vendors/pdfmake/build/vfs_fonts.js' %}"></script>
+    {% for english_institutes_register in english_institutes_registers %}
+        <script>
+            document.getElementById("{{ english_institute.CreateDate }}{{ forloop.counter }}").innerHTML = normalizeDate("{{ english_institute.CreateDate }}");
+        </script>
+    {% endfor %}
+    <script>
+        $('input[type=text]').addClass('form-control');
+        $('input[type=file]').addClass('form-control');
+        $('input[type=number]').addClass('form-control');
+        $('select').addClass('form-control');
+       
+    </script>
+{% endblock %}
+
+
+{% block cssBlock %}
+    <!-- Datatables -->
+
+    <link href="{% static 'assets/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css' %}"
+          rel="stylesheet">
+    <link href="{% static 'assets/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css' %}"
+          rel="stylesheet">
+    <link href="{% static 'assets/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css' %}"
+          rel="stylesheet">
+          <style>
+.limit_text{
+            white-space: nowrap;
+            overflow: hidden;
+            width: 200px;
+            height: 30px;
+            text-overflow: ellipsis; 
+        }
+          </style>
+        <style>
+        span.select2.select2-container.select2-container--default {
+            width: 100% !important;
+        }
+    </style>
+{% endblock %}
+
+
+{% block pageContent %}
+        <div class="x_panel">
+            <div class="x_title bg-primary">
+
+                <h2 class="pull-right">لیست</h2>
+                <ul class="nav navbar-left panel_toolbox">
+                    <li>
+                        <a class="close-link"><i class="fa fa-close"></i></a>
+                    </li>
+                    <li>
+                        <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                <div class="row">
+                    <table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap"
+                           cellspacing="0" width="100%">
+                        <thead>
+                        <tr>
+                            <th>ردیف</th>
+                            <th>ثبت کننده</th>
+                            <th>نوع فرم</th>
+                            <th>وضعیت</th>
+                            <th>عملیات</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for english_institutes_register in english_institutes_registers %}
+                            <tr>
+                                <!--ردیف-->
+                                <td>{{ forloop.counter }}</td>
+                                <!--ثبت کننده-->
+                                <td>
+                                {% if english_institutes_register.user.first_name and english_institutes_register.user.last_name %}
+                                    {{ english_institutes_register.user.first_name }} {{ english_institutes_register.user.last_name }}
+                                {% else %}
+                                    {{ english_institutes_register.user.username }}
+                                {% endif %}
+                                </td>
+                                <!--نوع فرم-->
+                                <td>                             
+                                    {% if english_institutes_register.type == 1 %}
+                                        <span>آموزشگاه</span>
+                                    {% elif english_institutes_register.type == 2 %}
+                                        <span>علمی آزاد</span>
+                                    {% elif english_institutes_register.type == 3 %}
+                                        <span>زبان خارجی</span>
+                                    {% endif %}               
+                                </td>
+                                <!--وضعیت-->
+                                <td style="text-align: center;">                                    
+                                    {% if english_institutes_register.send_status == 1 %}
+                                    <span >ثبت شده</span>               
+                                    {% elif english_institutes_register.send_status == 2 %}
+                                    <span >ارسال شده</span>
+                                    {% elif english_institutes_register.send_status == 3 %}
+                                    <span >رد شده</span>
+                                    {% elif english_institutes_register.send_status == 4 %}
+                                    <span >تایید شده</span>
+                                    {% endif %}
+                                </td>
+                                <!--عملیات-->
+                                <td>
+                                    <!-- institute english -->
+                                    {% if english_institutes_register.type == 3  %}
+                                        {% if english_institutes_register.send_status == 1 or english_institutes_register.send_status == 3 %}
+                                        <a class="btn btn-primary" href="{% url 'education:send_english_institute_forms_list' id=english_institutes_register.id %}">ارسال</a>
+                                        <a class="btn btn-success" href="{% url 'education:english_institute_edit' id=english_institutes_register.id %}">ویرایش</a>
+                                        <a class="btn btn-danger" href="{% url 'education:delete_english_institute_forms_list' id=english_institutes_register.id %}">حذف</a>
+                                        {% endif %}                          
+                                        
+                                        {% if english_institutes_register.send_status == 2 %}
+                                        <a class="btn btn-success" href="{% url 'education:english_institute_edit' id=english_institutes_register.id %}">ویرایش</a>
+                                        <a class="btn btn-danger" href="{% url 'education:delete_english_institute_forms_list' id=english_institutes_register.id %}">حذف</a>
+                                        {% endif %}
+
+                                        {% if english_institutes_register.send_status == 4 %}
+                                        <a class="btn btn-danger" href="{% url 'education:delete_english_institute_forms_list' id=english_institutes_register.id %}">حذف</a>
+                                        {% endif %}
+                                    {% endif %}
+
+                                    <!-- institute non profit -->
+                                    {% if english_institutes_register.type == 2  %}
+                                        {% if english_institutes_register.send_status == 1 or english_institutes_register.send_status == 3 %}
+                                        <a class="btn btn-primary" href="{% url 'education:send_nonprofit_institute_forms_list' id=english_institutes_register.id %}">ارسال</a>
+                                        <a class="btn btn-success" href="{% url 'education:nonprofit_form_edit' id=english_institutes_register.id %}">ویرایش</a>
+                                        <a class="btn btn-danger" href="{% url 'education:delete_nonprofit_institute_forms_list' id=english_institutes_register.id %}">حذف</a>
+                                        {% endif %}                          
+                                        
+                                        {% if english_institutes_register.send_status == 2 %}
+                                        <a class="btn btn-success" href="{% url 'education:nonprofit_form_edit' id=english_institutes_register.id %}">ویرایش</a>
+                                        <a class="btn btn-danger" href="{% url 'education:delete_nonprofit_institute_forms_list' id=english_institutes_register.id %}">حذف</a>
+                                        {% endif %}
+
+                                        {% if english_institutes_register.send_status == 4 %}
+                                        <a class="btn btn-danger" href="{% url 'education:delete_nonprofit_institute_forms_list' id=english_institutes_register.id %}">حذف</a>
+                                        {% endif %}
+                                    {% endif %}
+
+
+                                    <!-- institute  -->
+                                    {% if english_institutes_register.type == 1  %}
+                                        {% if english_institutes_register.send_status == 1 or english_institutes_register.send_status == 3 %}
+                                        <a class="btn btn-primary" href="{% url 'education:send_english_institute_forms_list' id=english_institutes_register.id %}">ارسال</a>
+                                        <a class="btn btn-success" href="{% url 'education:english_institute_edit' id=english_institutes_register.id %}">ویرایش</a>
+                                        <a class="btn btn-danger" href="{% url 'education:delete_english_institute_forms_list' id=english_institutes_register.id %}">حذف</a>
+                                        {% endif %}                          
+                                        
+                                        {% if english_institutes_register.send_status == 2 %}
+                                        <a class="btn btn-success" href="{% url 'education:english_institute_edit' id=english_institutes_register.id %}">ویرایش</a>
+                                        <a class="btn btn-danger" href="{% url 'education:delete_english_institute_forms_list' id=english_institutes_register.id %}">حذف</a>
+                                        {% endif %}
+
+                                        {% if english_institutes_register.send_status == 4 %}
+                                        <a class="btn btn-danger" href="{% url 'education:delete_english_institute_forms_list' id=english_institutes_register.id %}">حذف</a>
+                                        {% endif %}
+                                    {% endif %}
+
+                                    <!-- {% if english_institutes_register.user == user %}
+                                            <a class="btn btn-primary" href="/EditExperience/{{ english_institutes_register.id }}"> ویرایش </a>
+                                            <a class="btn btn-danger" data-toggle="modal" data-target="#exampleModal2"
+                                            onclick="document.getElementById('delete_link').href='/delete_forms_list/{{ english_institutes_register.id }}'">حذف</a>
+                                    {% endif %}
+                                    <a class="btn btn-success" href="#">کاربرگ</a> -->
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    <div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+   <div class="modal-dialog" role="document">
+       <div class="modal-content">
+           <div class="modal-header">
+               <h5 class="modal-title" id="exampleModalLabel">حذف تجربه</h5>
+               <button type="button" class="close" data-dismiss="modal"
+                       aria-label="Close">
+                   <span aria-hidden="true">&times;</span>
+               </button>
+           </div>
+           <div class="modal-body">
+               <p>آیا از حذف این آیتم مطمئن هستید؟</p>
+               <br>
+               <a class="btn btn-danger" id="delete_link"
+                  href=""><i
+                       class="fa fa-eye">
+                   حذف</i> </a>
+               <button type="button" class="btn btn-secondary"
+                       data-dismiss="modal">کنسل
+               </button>
+           </div>
+       </div>
+   </div>
+</div>
+
+<!-- بازنگری modal  -->
+<div class="modal fade" id="recyclemodal" tabindex="-1" role="dialog"
+aria-labelledby="recyclemodalLabel"
+aria-hidden="true">
+<div class="modal-dialog" role="document">
+   <div class="modal-content">
+       <div class="modal-header">
+           <h5 class="modal-title" id="recyclemodalLabel"> بازنگری</h5>
+           <button type="button" class="close" data-dismiss="modal"
+                   aria-label="Close">
+               <span aria-hidden="true">&times;</span>
+           </button>
+       </div>
+       <div class="modal-body">
+           <p>آیا از بازنگری این تجربه مطمئن هستید؟
+            <br>
+            (این تجربه تحت عنوان بازنگری ثبت میگردد و تجربیات قبل همچنان وجود دارند)
+
+           </p>
+           <br>
+           <a class="btn btn-warning" id="recycle_link"
+              href="">بازنگری </a>
+           <button type="button" class="btn btn-secondary"
+                   data-dismiss="modal">کنسل
+           </button>
+       </div>
+   </div>
+</div>
+</div>
+{% endblock %}

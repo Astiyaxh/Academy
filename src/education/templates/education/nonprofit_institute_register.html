@@ -15,10 +15,6 @@
         $("#id_name_founder").attr("placeholder", "نام و نام خانوادگی موسس");
         $("#id_name_manager").attr("placeholder", "نام و نام خانوادگی مدیر");
         $("#id_score").attr("placeholder", "امتیاز کیفیت بخشی");
-        $("#id_bin_number").attr("placeholder", "شماره حساب مرکز");
-        $("#id_bank").attr("placeholder", "نزد بانک");
-        $("#id_branch").attr("placeholder", "شعبه");
-        $("#id_english_institute").attr("placeholder", "آموزشگاه");
 
 
     </script>
@@ -78,20 +74,23 @@
                 </div>
 
                 <div class="col-md-4 col-sm-12 col-xs-12 form-group pull-right">
+                    <p class="control-label col-md-4 col-sm-12 col-xs-12 pull-right"> شماره حساب مرکز:</p>
                     {{ form.bin_number }}
                 </div>
 
                 <div class="col-md-4 col-sm-12 col-xs-12 form-group pull-right">
+                    <p class="control-label col-md-4 col-sm-12 col-xs-12 pull-right"> نزد بانک  :</p>
                     {{ form.bank }}
                 </div>
 
                 <div class="col-md-4 col-sm-12 col-xs-12 form-group pull-right">
+                    <p class="control-label col-md-4 col-sm-12 col-xs-12 pull-right"> شعبه :</p>
                     {{ form.branch }}
                 </div>
 
                 <div class="col-md-4 col-sm-12 col-xs-12 form-group pull-right">
                     <p class="control-label col-md-4 col-sm-12 col-xs-12 pull-right"> آموزشگاه :</p>
-                    {{ form.english_institute }}
+                    {{ form.nonproft_institute }}
                 </div>
 
                 <div class="col-md-4 col-sm-12 col-xs-12 form-group pull-right">
@@ -149,8 +148,8 @@
                                     <th>محتوای اموزشی</th>
                                     <th>تعداد جلسات</th>
                                     <th> حداکثر تعداد دانش آموز در کلاس </th>
-                                    <th>نرخ یک جلسه آموزشی 90 دقیقه</th>
-                                    <th>نرخ یک دوره آموزشی بر اساس N جلسه</th>
+                                    <th>میزان کل ساعت دوره</th>
+                                    <th>شهریه مصوب دوره</th>
                                     <th>حذف</th>
                                 </tr>
                             </thead>
@@ -160,7 +159,7 @@
                                 <tr id="{{item.TeamMember.member}}">
                                     <td>
                                         {{ table_term.english_institute_define_term.name }}
-                                        <input name='TermId' value='{{ table_term.english_institute_define_term.id }}' class='hidden'>
+                                        <input name='TermId' value='{{ table_term.nonprofit_institute_define_term.id }}' class='hidden'>
                                     </td>
                                     <td>
                                         <input name='education_content' required value="{{ table_term.education_content }}"   type='text'>
@@ -172,10 +171,10 @@
                                         <input name='max_student' required value="{{ table_term.max_student }}"   type='number'>
                                     </td>
                                     <td>
-                                        <input name='session_price' required value="{{ table_term.session_price }}"   type='number'>
+                                        <input name='max_hour' required value="{{ table_term.max_hour }}"   type='number'>
                                     </td>
                                     <td>
-                                        <input name='nsession_price' required value="{{ table_term.nsession_price }}"   type='number'>
+                                        <input name='tution' required value="{{ table_term.tuition }}"   type='number'>
                                     </td>
                                     <td>
                                         <span class='glyphicon glyphicon-trash row-remover btn btn-danger '></span>
@@ -212,8 +211,8 @@
                                 cell2.innerHTML = "<input name='education_content' required   type='text'>"
                                 cell3.innerHTML = "<input name='session_number' required min='1'  type='number'>"
                                 cell4.innerHTML = "<input name='max_student' required min='1'  type='number'>"
-                                cell5.innerHTML = "<input name='session_price' required min='1'  type='number'>"
-                                cell6.innerHTML = "<input name='nsession_price' required min='1'  type='number'>"
+                                cell5.innerHTML = "<input name='max_hour' required min='1'  type='number'>"
+                                cell6.innerHTML = "<input name='tution' required min='1'  type='number'>"
                                 cell7.innerHTML = "<span class='glyphicon glyphicon-trash row-remover btn btn-danger '></span>";
                                 tableIndex++;
                             }
