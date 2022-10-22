@@ -2,6 +2,7 @@ from django.db import models
 from user.models import User
 from APA_module import apa_datetime
 import datetime
+from django.core.validators import MaxValueValidator, MinValueValidator
 
 Active   = 1
 Deactive = -1
@@ -306,3 +307,62 @@ class RejectedNonprofitInstitueFormList(models.Model):
     time                         = models.TimeField(auto_now_add=True)
     status                       = models.IntegerField('وضعیت', default=1, choices=StatusChoices)
     create_date                  = models.IntegerField('تاریخ ثبت', default=apa_datetime.get_persian_date_normalized())
+
+
+
+
+class InstituteName(models.Model):
+    """
+    نام موسسه
+    """
+    class Meta:
+        verbose_name        = 'نام موسسه'
+        verbose_name_plural = 'P-نام موسسه'
+        
+
+    name    = models.CharField('نام', max_length=255, unique=True, )
+    status  = models.IntegerField('وضعیت', default=1, choices=StatusChoices)
+
+    def __str__(self):
+        return str(self.name)
+
+class Institute(models.Model):
+    """
+    فرم آموزشگاه
+    """
+    class Meta:
+        verbose_name        = 'فرم آموزشگاه(موسسه)'
+        verbose_name_plural = 'Q-فرم آموزشگاه(موسسه)'
+
+    institute_name                              = models.ForeignKey(InstituteName, on_delete=models.PROTECT)
+    user_id                                     = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
+    institute_activity_type                     = models.ForeignKey(InstitueActivityType, on_delete=models.PROTECT)
+    sex                                         = models.IntegerField('جنسیت', default=1, choices=SexChoieces)
+    inclusive_number                            = models.IntegerField('تعداد فراگیر')
+    title_program                               = models.CharField('عنوان برنامه', max_length=255)
+    study_period                                = models.ForeignKey(StudyPeriod, on_delete=models.PROTECT)
+    cost_description_human_resourse             = models.CharField('شرح هزینه نیروی انسانی', max_length=255,)
+    cost_description_space                      = models.CharField('شرح هزینه سرانه ی فضای فیزیکی', max_length=255,)
+    cost_description_other_expenses             = models.CharField('شرح هزینه سایر هزینه ها', max_length=255,)
+    cost_description_quality                    = models.CharField(' کیفیت بخشی بر اساس جدول 2', max_length=255,)
+    self_statement_cost_percent_human_resourse  = models.IntegerField('درصد هزینه خود اظهاری نیروی انسانی',validators=[MinValueValidator(30), MaxValueValidator(50)])
+    self_statement_cost_percent_space           = models.IntegerField('درصد هزینه خود اظهاری  فضای فیزیکی',validators=[MinValueValidator(30), MaxValueValidator(50)])
+    self_statement_cost_percent_other_expenses  = models.IntegerField('درصد هزینه خود اظهاری سایر هزینه ها',validators=[MinValueValidator(10), MaxValueValidator(30)])
+    self_statement_cost_percent_other_quality   = models.IntegerField('درصد هزینه خود اظهاری کیفیت بخشی')
+    self_statement_cost_human_resourse          = models.CharField(' هزینه خود اظهاری نیروی انسانی',max_length=255)
+    self_statement_cost_space                   = models.CharField(' هزینه خود اظهاری  فضای فیزیکی',max_length=255)
+    self_statement_cost_other_expenses          = models.CharField(' هزینه خود اظهاری سایر هزینه ها',max_length=255)
+    self_statement_cost_other_quality           = models.CharField(' هزینه خود اظهاری کیفیت بخشی',max_length=255)
+    area_cost_percent_human_resourse            = models.IntegerField('درصد هزینه بررسی منطقه نیروی انسانی',validators=[MinValueValidator(30), MaxValueValidator(50)])
+    area_cost_percent_space                     = models.IntegerField('درصد هزینه بررسی منطقه  فضای فیزیکی',validators=[MinValueValidator(30), MaxValueValidator(50)])
+    area_cost_percent_other_expenses            = models.IntegerField('درصد هزینه بررسی منطقه سایر هزینه ها',validators=[MinValueValidator(10), MaxValueValidator(30)])
+    area_cost_percent_other_quality             = models.IntegerField('درصد هزینه بررسی منطقه کیفیت بخشی')
+    area_cost_human_resourse                    = models.CharField(' هزینه بررسی منطقه نیروی انسانی',max_length=255)
+    area_cost_space                             = models.CharField(' هزینه خبررسی منطقه  فضای فیزیکی',max_length=255)
+    area_cost_other_expenses                    = models.CharField(' هزینه بررسی منطقه سایر هزینه ها',max_length=255)
+    area_cost_other_quality                     = models.CharField(' هزینه بررسی منطقه کیفیت بخشی',max_length=255)
+    status                                      = models.IntegerField('وضعیت', default=1, choices=StatusChoices)
+    create_date                                 = models.IntegerField('تاریخ ثبت', default=apa_datetime.get_persian_date_normalized())
+
+    def __str__(self):
+        return str(self.id)
